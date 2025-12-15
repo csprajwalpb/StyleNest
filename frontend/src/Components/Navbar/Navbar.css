@@ -1,0 +1,152 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px -2px black;
+    padding: 15px 70px;
+}
+.nav-logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-logo img{
+    width: 45px;
+}
+.nav-logo p{
+    color: #171717;
+    font-size: 28px;
+    font-weight: 600;
+}
+.nav-menu{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 40px;
+    color: #626262;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.nav-menu li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+}
+.nav-menu hr{
+    border: none;
+    width: 80%;
+    height: 3px;
+    border-radius: 10px;
+    background: #FF4141;
+}
+.nav-login-cart{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-login-cart button{
+    width: 120px;
+    height: 40px;
+    outline: none;
+    border: 1px solid #7a7a7a;
+    border-radius: 75px;
+    color: #515151;
+    font-size: 16px;
+    font-weight: 500;
+    background: white;
+    cursor: pointer;
+}
+.nav-login-cart button:active{
+    background: #f3f3f3;
+}
+.nav-login-cart img{
+    width: 35px;
+}
+.nav-cart-count{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -30px;
+    margin-left: -40px;
+    font-size: 14px;
+    background: red;
+    color: white;
+}
+.nav-dropdown{
+    display: none;
+}
+
+/* -------- media query---------- */
+@media(max-width:900px){
+    .nav{
+        padding: 15px 40px;
+    }
+    .nav-menu{
+        gap: 15px;
+    }
+}
+
+@media(max-width:750px){
+    .nav{
+        padding: 15px 20px;
+    }
+    .nav-login-cart{
+        gap: 15px;
+    }
+    .nav-dropdown{
+        display: block;
+        width: 30px;
+        rotate: -90deg;
+        transition: 0.5s;
+    } 
+    .nav-menu{
+        display: none;
+        height: 80px;
+        width: 100%;
+        position: absolute;
+        background-color: white;
+        justify-content: center;
+        top: 60px;
+        left: 0;
+    }
+    .nav-menu-visible{
+        display: flex;
+    }
+    .nav-dropdown.open{
+        transform: rotate(90deg);
+    }
+    .nav-cart-count{
+        margin-left: -25px;
+    }
+}
+
+@media(max-width:500px){
+    .nav{
+        padding: 15px 15px;
+    }
+
+    .nav-logo img{
+        width: 30px;
+    }
+    .nav-logo p{
+        font-size: 18px;
+    }
+    .nav-menu-visible{
+        height: 70px;
+        top: 60px;
+    }
+    .nav-login-cart{
+        transform: scale(0.8);
+    } 
+    .nav-login-cart{
+        gap: 10px;
+    }
+}
