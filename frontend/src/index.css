@@ -1,0 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'poppins';
+}
+
+a {
+  text-decoration: none !important;
+  color: inherit;
+}
