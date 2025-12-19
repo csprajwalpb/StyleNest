@@ -28,13 +28,14 @@ const CartItems = () => {
   const orderData = await orderRes.json();
   console.log("Order Data:", orderData);
   const options = {
-    key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+    key: "rzp_test_RsxmVyPQnVW7cT",
     amount: orderData.amount,
     currency: "INR",
     name: "E-Commerce Store",
     description: "Order Payment",
     order_id: orderData.id,
     handler: async function (response) {
+      console.log("Razorpay Key:", process.env.REACT_APP_RAZORPAY_KEY_ID);
        console.log("Razorpay Response:", response);
       const verifyRes = await fetch(`${backend_url}/verify-payment`, {
         method: "POST",

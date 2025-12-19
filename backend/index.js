@@ -9,6 +9,7 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const port = process.env.PORT || 4000;
+const Order = require("./models/Order");
 
 app.use(express.json());
 app.use(cors());
@@ -254,6 +255,8 @@ app.post("/removeproduct", async (req, res) => {
   res.json({ success: true, name: req.body.name })
 });
 
+
+// Razorpay Payment Gateway Integration
 app.post("/create-order", fetchuser, async (req, res) => {
   console.log("Creating order with key:", razorpay.key_id);
   try {
@@ -274,6 +277,7 @@ app.post("/create-order", fetchuser, async (req, res) => {
   }
 });
 
+// Verify Payment and Clear Cart
 app.post("/verify-payment", fetchuser, async (req, res) => {
   const {
     razorpay_order_id,
@@ -284,27 +288,68 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
   const expectedSignature = crypto
-    .createHmac("sha256", "SYw1nNAdFKZehn40PbXCJ9q1")
+    .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
     .update(body.toString())
     .digest("hex");
 
   if (expectedSignature === razorpay_signature) {
-    // Payment verified
-    // Clear cart
-    let emptyCart = {};
-for (let i = 0; i < 300; i++) {
-  emptyCart[i] = 0;
-}
-    await Users.findOneAndUpdate(
-      { _id: req.user.id },
-      { cartData: emptyCart }
-    );
 
-    res.status(200).json({ success: true });
-  } else {
-    res.status(400).json({ success: false });
+  // 1️⃣ Get user
+  const user = await Users.findById(req.user.id);
+
+  // 2️⃣ Build items array from cart
+  const items = [];
+
+  for (const productId in user.cartData) {
+    if (user.cartData[productId] > 0) {
+      const product = await Product.findOne({ id: Number(productId) });
+
+      if (product) {
+        items.push({
+          productId: product.id,
+          name: product.name,
+          price: product.new_price,
+          quantity: user.cartData[productId],
+          image: product.image
+        });
+      }
+    }
   }
+
+  // 3️⃣ Calculate total
+  const totalAmount = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
+
+  // 4️⃣ Save order
+  const order = new Order({
+    userId: req.user.id,
+    items,
+    totalAmount,
+    razorpay_order_id,
+    razorpay_payment_id,
+    paymentStatus: "Paid",
+    orderStatus: "Placed"
+  });
+
+  await order.save();
+
+  // 5️⃣ Clear cart
+  let emptyCart = {};
+  for (let i = 0; i < 300; i++) {
+    emptyCart[i] = 0;
+  }
+
+  user.cartData = emptyCart;
+  await user.save();
+
+  res.status(200).json({ success: true, orderId: order._id });
+}
+
 });
+
+
 
 // Starting Express Server
 app.listen(port, (error) => {
