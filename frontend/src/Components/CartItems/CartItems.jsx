@@ -8,6 +8,66 @@ const CartItems = () => {
   const {products} = useContext(ShopContext);
   const {cartItems,removeFromCart,getTotalCartAmount} = useContext(ShopContext);
 
+  const handleCheckout = async () => {
+  const amount = getTotalCartAmount();
+
+  if (amount === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  const orderRes = await fetch(`${backend_url}/create-order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "auth-token": localStorage.getItem("auth-token"),
+    },
+    body: JSON.stringify({ amount }),
+  });
+
+  const orderData = await orderRes.json();
+  console.log("Order Data:", orderData);
+  const options = {
+    key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+    amount: orderData.amount,
+    currency: "INR",
+    name: "E-Commerce Store",
+    description: "Order Payment",
+    order_id: orderData.id,
+    handler: async function (response) {
+       console.log("Razorpay Response:", response);
+      const verifyRes = await fetch(`${backend_url}/verify-payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+        body: JSON.stringify({
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_signature: response.razorpay_signature
+        })
+      });
+
+      const verifyData = await verifyRes.json();
+
+      if (verifyData.success) {
+        alert("Payment Successful 🎉");
+        window.location.reload();
+      } else {
+        alert("Payment Failed");
+      }
+    },
+    theme: {
+      color: "#3399cc",
+    },
+  };
+
+  const rzp = new window.Razorpay(options);
+  rzp.open();
+};
+
+
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -23,10 +83,10 @@ const CartItems = () => {
 
         if(cartItems[e.id]>0)
         {
-          return  <div>
+          return  <div key={e.id}>
                     <div className="cartitems-format-main cartitems-format">
                       <img className="cartitems-product-icon" src={backend_url+e.image} alt="" />
-                      <p cartitems-product-title>{e.name}</p>
+                      <p className="cartitems-product-title">{e.name}</p>
                       <p>{currency}{e.new_price}</p>
                       <button className="cartitems-quantity">{cartItems[e.id]}</button>
                       <p>{currency}{e.new_price*cartItems[e.id]}</p>
@@ -57,7 +117,9 @@ const CartItems = () => {
               <h3>{currency}{getTotalCartAmount()}</h3>
             </div>
           </div>
-          <button>PROCEED TO CHECKOUT</button>
+          <button onClick={handleCheckout}>
+  PROCEED TO CHECKOUT
+</button>
         </div>
         <div className="cartitems-promocode">
           <p>If you have a promo code, Enter it here</p>

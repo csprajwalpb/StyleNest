@@ -1,17 +1,22 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require("dotenv").config(); 
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const Razorpay = require("razorpay");
+const crypto = require("crypto");
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cors());
 
 // Database Connection With MongoDB
-mongoose.connect("mongodb+srv://codeforce:Mongodb12345@cluster0.wbiycrd.mongodb.net/e-commerce");
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.error(err));
 
 // paste your mongoDB Connection string above with password
 // password should not contain '@' or any other special character
@@ -40,17 +45,23 @@ app.use('/images', express.static('upload/images'));
 // MiddleWare to fetch user from token
 const fetchuser = async (req, res, next) => {
   const token = req.header("auth-token");
+  console.log("TOKEN RECEIVED:", token);
   if (!token) {
     res.status(401).send({ errors: "Please authenticate using a valid token" });
   }
   try {
-    const data = jwt.verify(token, "secret_ecom");
+    const data = jwt.verify(token, `${process.env.JWT_SECRET}`);
     req.user = data.user;
     next();
   } catch (error) {
     res.status(401).send({ errors: "Please authenticate using a valid token" });
   }
 };
+
+const razorpay = new Razorpay({
+  key_id: `${process.env.RAZORPAY_KEY_ID}`,
+  key_secret: `${process.env.RAZORPAY_KEY_SECRET}`,
+});
 
 
 // Schema for creating user model
@@ -98,7 +109,7 @@ app.post('/login', async (req, res) => {
       }
       success = true;
       console.log(user.id);
-      const token = jwt.sign(data, 'secret_ecom');
+      const token = jwt.sign(data, `${process.env.JWT_SECRET}`);
       res.json({ success, token });
     }
     else {
@@ -136,7 +147,7 @@ app.post('/signup', async (req, res) => {
     }
   }
 
-  const token = jwt.sign(data, 'secret_ecom');
+  const token = jwt.sign(data, `${process.env.JWT_SECRET}`);
   success = true;
   res.json({ success, token })
 })
@@ -181,6 +192,9 @@ app.post("/relatedproducts", async (req, res) => {
 app.post('/addtocart', fetchuser, async (req, res) => {
   console.log("Add Cart");
   let userData = await Users.findOne({ _id: req.user.id });
+  if (!userData.cartData[req.body.itemId]) {
+    userData.cartData[req.body.itemId] = 0;
+  }
   userData.cartData[req.body.itemId] += 1;
   await Users.findOneAndUpdate({ _id: req.user.id }, { cartData: userData.cartData });
   res.send("Added")
@@ -238,6 +252,58 @@ app.post("/removeproduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
   console.log("Removed");
   res.json({ success: true, name: req.body.name })
+});
+
+app.post("/create-order", fetchuser, async (req, res) => {
+  console.log("Creating order with key:", razorpay.key_id);
+  try {
+    const { amount } = req.body; // amount in rupees
+    console.log("Amount received:", req.body.amount);
+    const options = {
+      amount: amount * 100, // Razorpay uses paise
+      currency: "INR",
+      receipt: "order_rcptid_" + Date.now(),
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Order creation failed");
+  }
+});
+
+app.post("/verify-payment", fetchuser, async (req, res) => {
+  const {
+    razorpay_order_id,
+    razorpay_payment_id,
+    razorpay_signature,
+  } = req.body;
+
+  const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+  const expectedSignature = crypto
+    .createHmac("sha256", "SYw1nNAdFKZehn40PbXCJ9q1")
+    .update(body.toString())
+    .digest("hex");
+
+  if (expectedSignature === razorpay_signature) {
+    // Payment verified
+    // Clear cart
+    let emptyCart = {};
+for (let i = 0; i < 300; i++) {
+  emptyCart[i] = 0;
+}
+    await Users.findOneAndUpdate(
+      { _id: req.user.id },
+      { cartData: emptyCart }
+    );
+
+    res.status(200).json({ success: true });
+  } else {
+    res.status(400).json({ success: false });
+  }
 });
 
 // Starting Express Server
