@@ -1,9 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const fs = require("fs");
+const path = require("path");
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// Load MCP context files
+let storeContext = {};
+try {
+  const mcpPath = path.join(__dirname, "..", "mcp");
+  storeContext = {
+    storeInfo: JSON.parse(fs.readFileSync(path.join(mcpPath, "store_info.json"), "utf8")),
+    products: JSON.parse(fs.readFileSync(path.join(mcpPath, "products_context.json"), "utf8")),
+    navigation: JSON.parse(fs.readFileSync(path.join(mcpPath, "navigation.json"), "utf8")),
+    faq: JSON.parse(fs.readFileSync(path.join(mcpPath, "faq.json"), "utf8")),
+  };
+  console.log("✅ MCP context loaded successfully");
+} catch (error) {
+  console.error("⚠️ Warning: Could not load MCP context files:", error.message);
+}
 
 /**
  * POST /api/chat
@@ -43,10 +60,41 @@ router.post("/chat", async (req, res) => {
       conversationContext += "\n";
     }
 
-    // Add system instructions for better responses
-    const systemPrompt = `You are a helpful AI assistant for StyleNest, an e-commerce fashion platform. 
-Be concise, friendly, and helpful. Assist users with product inquiries, shopping guidance, and general questions.
-If you don't know something specific about the store, politely say so.
+    // Build comprehensive system prompt with MCP context
+    const systemPrompt = `You are a helpful AI assistant for StyleNest, an e-commerce fashion platform.
+
+STORE INFORMATION:
+- Store Name: ${storeContext.storeInfo?.store_name || "StyleNest"}
+- Description: ${storeContext.storeInfo?.description || "Premium fashion platform"}
+- Currency: ${storeContext.storeInfo?.policies?.currency || "₹"}
+
+AVAILABLE CATEGORIES:
+${Object.entries(storeContext.products?.categories || {}).map(([key, cat]) => 
+  `- ${cat.name} (${cat.url}): ${cat.description}`
+).join('\n')}
+
+NAVIGATION HELP:
+- Shop page: / (shows all products)
+- Men's fashion: /mens
+- Women's fashion: /womens
+- Kids' fashion: /kids
+- Cart: Click cart icon in top right
+- Login/Account: Click Login button in top navigation
+
+YOUR CAPABILITIES:
+- Help users navigate the website
+- Provide information about product categories
+- Answer questions about shopping features
+- Guide users to specific sections
+- Provide store policies and general information
+
+IMPORTANT GUIDELINES:
+- Be concise, friendly, and helpful
+- Use bullet points for lists
+- Use **bold** for emphasis on key terms
+- Provide direct navigation instructions when needed
+- If you don't know specific product prices or inventory, guide users to browse the categories
+- Always include relevant URLs when directing users (e.g., "Go to /womens for women's fashion")
 
 ${conversationContext}User: ${message}
 Assistant:`;

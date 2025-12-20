@@ -1,0 +1,86 @@
+{
+  "common_questions": [
+    {
+      "question": "What categories of products do you offer?",
+      "answer": "We offer fashion for Men, Women, and Kids. Each category includes clothing, accessories, and more. Browse by clicking the category links in the top menu."
+    },
+    {
+      "question": "How do I find dresses?",
+      "answer": "Click on 'Women' in the top navigation to browse our women's collection, which includes various dress styles like maxi, midi, mini, A-line, bodycon, party dresses, and casual dresses."
+    },
+    {
+      "question": "How do I add items to my cart?",
+      "answer": "Click on any product to view details, then click the 'Add to Cart' button. You can view your cart anytime by clicking the cart icon in the top right corner."
+    },
+    {
+      "question": "Do I need an account to shop?",
+      "answer": "Yes, you'll need to create an account or login to complete your purchase. Click the 'Login' button in the top navigation to get started."
+    },
+    {
+      "question": "What payment methods do you accept?",
+      "answer": "We accept payments through Razorpay, which supports credit cards, debit cards, UPI, net banking, and wallets."
+    },
+    {
+      "question": "What currency are prices shown in?",
+      "answer": "All prices are displayed in Indian Rupees (₹)."
+    },
+    {
+      "question": "How do I check my cart?",
+      "answer": "Click the cart icon in the top right corner of the page. The number badge shows how many items are in your cart."
+    },
+    {
+      "question": "What are 'Popular in Women' and 'New Collections'?",
+      "answer": "'Popular in Women' showcases trending women's fashion items. 'New Collections' displays the latest arrivals across all categories. You'll find these sections on the homepage."
+    },
+    {
+      "question": "Can I see product details before buying?",
+      "answer": "Yes! Click on any product card to view full details including description, price, images, and availability."
+    },
+    {
+      "question": "How do I navigate the website?",
+      "answer": "Use the top navigation menu to browse categories (Shop, Men, Women, Kids). The Shop page shows all products, or you can filter by specific categories."
+    },
+    {
+      "question": "What is the 'Latest Collection' button?",
+      "answer": "This button on the homepage takes you to our newest arrivals. It's a quick way to see what's fresh in our store."
+    },
+    {
+      "question": "Are there any special offers?",
+      "answer": "Check our homepage for current offers and promotions. We regularly update with new deals and exclusive collections."
+    },
+    {
+      "question": "How do I logout?",
+      "answer": "Click the 'Logout' button in the top right corner of the navigation bar when you're logged in."
+    },
+    {
+      "question": "Where can I find size information?",
+      "answer": "Size details are included in product descriptions. Click on a product to view its full details including sizing information."
+    },
+    {
+      "question": "What if a product is out of stock?",
+      "answer": "Product availability is shown on each product page. If an item is unavailable, check back later or browse similar items in the same category."
+    }
+  ],
+  "quick_actions": {
+    "browse_men": "Go to /mens to see men's collection",
+    "browse_women": "Go to /womens to see women's collection",
+    "browse_kids": "Go to /kids to see kids' collection",
+    "view_cart": "Click the cart icon at top right",
+    "login_signup": "Click 'Login' button in top navigation",
+    "see_all_products": "Go to '/' (Shop page) to see everything"
+  },
+  "chatbot_capabilities": [
+    "Help navigate the website",
+    "Provide product category information",
+    "Explain shopping process",
+    "Answer questions about features",
+    "Guide users to specific sections",
+    "Provide general store information"
+  ],
+  "limitations": [
+    "Cannot access real-time inventory database",
+    "Cannot process actual orders (users must checkout normally)",
+    "Cannot access user account details",
+    "Cannot provide specific product prices without database access"
+  ]
+}

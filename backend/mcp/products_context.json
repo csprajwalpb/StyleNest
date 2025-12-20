@@ -1,0 +1,75 @@
+{
+  "categories": {
+    "men": {
+      "name": "Men's Collection",
+      "url": "/mens",
+      "description": "Explore our men's fashion collection featuring contemporary styles",
+      "subcategories": [
+        "Casual wear",
+        "Formal wear",
+        "Shirts",
+        "Pants",
+        "Jackets",
+        "Accessories"
+      ]
+    },
+    "women": {
+      "name": "Women's Collection",
+      "url": "/womens",
+      "description": "Discover elegant and trendy women's fashion",
+      "subcategories": [
+        "Dresses",
+        "Tops",
+        "Skirts",
+        "Pants",
+        "Evening wear",
+        "Casual wear",
+        "Accessories"
+      ],
+      "dress_types": [
+        "Maxi dresses",
+        "Midi dresses",
+        "Mini dresses",
+        "A-line dresses",
+        "Fit-and-flare dresses",
+        "Bodycon dresses",
+        "Party dresses",
+        "Casual dresses",
+        "Work dresses"
+      ]
+    },
+    "kids": {
+      "name": "Kids' Collection",
+      "url": "/kids",
+      "description": "Comfortable and stylish clothing for children",
+      "subcategories": [
+        "Boys' clothing",
+        "Girls' clothing",
+        "Casual wear",
+        "Party wear"
+      ]
+    }
+  },
+  "product_attributes": {
+    "available_info": [
+      "Product name",
+      "Description",
+      "Price (old_price and new_price)",
+      "Category",
+      "Availability status",
+      "Product images"
+    ],
+    "pricing": "All prices are in Indian Rupees (₹)"
+  },
+  "shopping_guidance": {
+    "how_to_shop": [
+      "Browse categories from the top navigation menu",
+      "Click on products to view detailed information",
+      "Add items to cart using the 'Add to Cart' button",
+      "View your cart by clicking the cart icon",
+      "Proceed to checkout when ready"
+    ],
+    "size_help": "Product details include size information. Contact us for specific size queries.",
+    "availability": "Product availability is shown on each product page"
+  }
+}
