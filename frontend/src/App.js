@@ -9,6 +9,7 @@ import women_banner from "./Components/Assets/banner_women.png";
 import men_banner from "./Components/Assets/banner_mens.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
 import LoginSignup from "./Pages/LoginSignup";
+import ChatWidget from "./Components/ChatWidget/ChatWidget";
 
 export const backend_url = 'http://localhost:4000';
 export const currency = '₹';
@@ -32,6 +33,7 @@ function App() {
         </Routes>
         <Footer />
       </Router>
+      <ChatWidget />
     </div>
   );
 }

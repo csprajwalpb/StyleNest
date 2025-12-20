@@ -350,6 +350,10 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
 });
 
 
+// Chat API Route
+const chatRoutes = require("./routes/chat");
+app.use("/api", chatRoutes);
+
 
 // Starting Express Server
 app.listen(port, (error) => {
