@@ -1,0 +1,36 @@
+{
+  "store_name": "StyleNest",
+  "description": "StyleNest is a premium e-commerce fashion platform offering a curated selection of clothing for men, women, and kids.",
+  "tagline": "Limited Collections Only - New Arrivals",
+  "categories": {
+    "men": "Men's fashion including shirts, pants, jackets, and accessories",
+    "women": "Women's fashion including dresses, tops, skirts, pants, and accessories",
+    "kids": "Kids' fashion for all ages"
+  },
+  "features": {
+    "shopping_cart": "Add products to cart and checkout seamlessly",
+    "user_accounts": "Create account, login, and manage your profile",
+    "secure_payments": "Razorpay integration for secure payments",
+    "product_details": "Detailed product pages with descriptions and images",
+    "collections": {
+      "popular_in_women": "Trending women's fashion items",
+      "new_collections": "Latest arrivals across all categories"
+    }
+  },
+  "policies": {
+    "currency": "₹ (Indian Rupee)",
+    "shipping": "Available across India",
+    "returns": "Contact support for return policies"
+  },
+  "contact": {
+    "support": "Available through the AI chat assistant",
+    "help_topics": [
+      "Product information and availability",
+      "Size guides and fitting",
+      "Order tracking and status",
+      "Payment methods",
+      "Returns and exchanges",
+      "Account management"
+    ]
+  }
+}

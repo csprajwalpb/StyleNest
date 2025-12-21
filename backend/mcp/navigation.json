@@ -1,0 +1,84 @@
+{
+  "site_structure": {
+    "main_navigation": [
+      {
+        "label": "Shop",
+        "url": "/",
+        "description": "Main shopping page showing all products"
+      },
+      {
+        "label": "Men",
+        "url": "/mens",
+        "description": "Men's fashion collection"
+      },
+      {
+        "label": "Women",
+        "url": "/womens",
+        "description": "Women's fashion collection"
+      },
+      {
+        "label": "Kids",
+        "url": "/kids",
+        "description": "Kids' fashion collection"
+      }
+    ],
+    "user_actions": [
+      {
+        "action": "View Cart",
+        "location": "Cart icon in top navigation",
+        "url": "/cart",
+        "description": "Review items added to cart and proceed to checkout"
+      },
+      {
+        "action": "Login/Signup",
+        "location": "Logout/Login button in top navigation",
+        "url": "/login",
+        "description": "Create a new account or login to existing account"
+      }
+    ],
+    "homepage_sections": [
+      {
+        "section": "Hero Banner",
+        "content": "Featured: Limited Collections Only with Latest Collection CTA"
+      },
+      {
+        "section": "Popular in Women",
+        "content": "Trending women's products"
+      },
+      {
+        "section": "Offers",
+        "content": "Special offers and promotions"
+      },
+      {
+        "section": "New Collections",
+        "content": "Recently added products across all categories"
+      },
+      {
+        "section": "Newsletter",
+        "content": "Subscribe for updates and exclusive offers"
+      }
+    ]
+  },
+  "user_journey": {
+    "new_customer": [
+      "Browse products on homepage or category pages",
+      "Click on products to view details",
+      "Add desired items to cart",
+      "Create an account or login",
+      "Proceed to checkout",
+      "Complete payment"
+    ],
+    "returning_customer": [
+      "Login to your account",
+      "Browse or search for products",
+      "Add items to cart",
+      "Review cart and checkout"
+    ]
+  },
+  "helpful_navigation_tips": {
+    "finding_products": "Use the top menu to browse by category (Men, Women, Kids) or scroll through the Shop page",
+    "product_details": "Click on any product card to view full details, pricing, and images",
+    "cart_access": "The cart icon at the top right shows the number of items and provides quick access",
+    "account_management": "Click Login/Logout button to access account features"
+  }
+}

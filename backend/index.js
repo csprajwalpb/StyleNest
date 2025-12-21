@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-require("dotenv").config(); 
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, '../.env') }); 
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
-const path = require("path");
 const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
@@ -349,6 +349,10 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
 
 });
 
+
+// Chat API Route
+const chatRoutes = require("./routes/chat");
+app.use("/api", chatRoutes);
 
 
 // Starting Express Server
