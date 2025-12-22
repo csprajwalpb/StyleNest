@@ -23,7 +23,7 @@ const Navbar = () => {
     <div className='nav'>
       <Link to='/' onClick={()=>{setMenu("shop")}} style={{ textDecoration: 'none' }} className="nav-logo">
         <img src={logo} alt="logo" />
-        <p>StyleNest</p>
+        <p>STYLENEST</p>
       </Link>
       <img onClick={dropdown_toggle} className='nav-dropdown' src={nav_dropdown} alt="" />
       <ul ref={menuRef} className="nav-menu">
