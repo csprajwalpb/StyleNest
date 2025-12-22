@@ -32,7 +32,20 @@ const OrderSchema = new mongoose.Schema({
 
   orderStatus: {
     type: String,
+    enum: ["Placed", "Shipped", "Delivered"],
     default: "Placed"
+  },
+
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    default: null
+  },
+
+  review: {
+    type: String,
+    default: ""
   },
 
   createdAt: {

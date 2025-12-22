@@ -3,6 +3,9 @@ import "./CSS/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [ratingModal, setRatingModal] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
   const token = localStorage.getItem("auth-token");
 
   const downloadInvoice = async (orderId) => {
