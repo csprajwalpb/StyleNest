@@ -9,7 +9,11 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const port = process.env.PORT || 4000;
+<<<<<<< HEAD
 const Order = require("./models/Order");
+=======
+const nodemailer = require("nodemailer");
+>>>>>>> manoj-branch
 
 app.use(express.json());
 app.use(cors());
@@ -64,6 +68,13 @@ const razorpay = new Razorpay({
   key_secret: `${process.env.RAZORPAY_KEY_SECRET}`,
 });
 
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
 
 // Schema for creating user model
 const Users = mongoose.model("Users", {
@@ -71,6 +82,8 @@ const Users = mongoose.model("Users", {
   email: { type: String, unique: true },
   password: { type: String },
   cartData: { type: Object },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date },
   date: { type: Date, default: Date.now() },
 });
 
@@ -142,16 +155,80 @@ app.post('/signup', async (req, res) => {
     cartData: cart,
   });
   await user.save();
-  const data = {
-    user: {
-      id: user.id
-    }
+
+  const token = jwt.sign(
+    { user: { id: user.id } },
+    process.env.JWT_SECRET
+  );
+
+  success = true;
+  res.json({ success, token });
+});
+  
+//create endpoint for forget password 
+app.post("/forgot-password", async (req, res) => {
+  const { email } = req.body;
+
+  const user = await Users.findOne({ email });
+  if (!user) {
+    // security best practice
+    return res.json({ message: "If account exists, reset link sent" });
   }
 
-  const token = jwt.sign(data, `${process.env.JWT_SECRET}`);
-  success = true;
-  res.json({ success, token })
-})
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  user.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+  await user.save();
+
+  const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+  await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: user.email,
+    subject: "Password Reset - StyleNest",
+    text: `
+You requested a password reset.
+
+Click the link below:
+${resetURL}
+
+This link expires in 15 minutes.
+    `,
+  });
+
+  res.json({ message: "Password reset link sent to email" });
+});
+
+
+//reset password API
+app.post("/reset-password/:token", async (req, res) => {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await Users.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+
+  await user.save();
+  res.json({ message: "Password reset successful" });
+});
+  
 
 // endpoint for getting all products data
 app.get("/allproducts", async (req, res) => {
@@ -184,9 +261,6 @@ app.post("/relatedproducts", async (req, res) => {
   const arr = products.slice(0, 4);
   res.send(arr);
 });
-
-
-
 
 
 // Create an endpoint for saving the product in cart

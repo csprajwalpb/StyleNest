@@ -1,21 +1,27 @@
 services:
   backend:
+    container_name: stylenest-backend
     build: ./backend
     ports:
       - "4000:4000"
     env_file:
-      - .env
+      - ./backend/.env
+    restart: unless-stopped
 
   frontend:
+    container_name: stylenest-frontend
     build: ./frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
+    restart: unless-stopped
 
   admin:
+    container_name: stylenest-admin
     build: ./admin
     ports:
       - "3001:80"
     depends_on:
       - backend
+    restart: unless-stopped
