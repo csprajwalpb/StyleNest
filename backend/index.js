@@ -9,11 +9,9 @@ const cors = require("cors");
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const port = process.env.PORT || 4000;
-<<<<<<< HEAD
 const Order = require("./models/Order");
-=======
 const nodemailer = require("nodemailer");
->>>>>>> manoj-branch
+
 
 app.use(express.json());
 app.use(cors());
