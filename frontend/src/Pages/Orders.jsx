@@ -1,99 +1,186 @@
 import React, { useEffect, useState } from "react";
+import "./CSS/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [ratingModal, setRatingModal] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
   const token = localStorage.getItem("auth-token");
 
-// Function to download invoice PDF
+  // Function to download invoice PDF
   const downloadInvoice = async (orderId) => {
-  const res = await fetch(
-    `http://localhost:4000/api/orders/invoice/${orderId}`,
-    {
-      headers: {
-        "auth-token": localStorage.getItem("auth-token"),
-      },
+    const res = await fetch(
+      `http://localhost:4000/api/orders/invoice/${orderId}`,
+      {
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+        },
+      }
+    );
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("Invoice download failed:", errText);
+      alert("Failed to download invoice");
+      return;
     }
-  );
-  if (!res.ok) {
-    const errText = await res.text();
-  console.error("Invoice download failed:", errText);
-    alert("Failed to download invoice");
-    return;
-  }
 
-  const blob = await res.blob();
-  const url = window.URL.createObjectURL(blob);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `invoice_${orderId}.pdf`;
-  document.body.appendChild(a);
-  a.click();
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `invoice_${orderId}.pdf`;
+    document.body.appendChild(a);
+    a.click();
 
-  a.remove();
-  window.URL.revokeObjectURL(url);
-};
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  };
 
+  // Submit rating
+  const submitRating = async (orderId) => {
+    if (rating === 0) {
+      alert("Please select a rating");
+      return;
+    }
 
-  useEffect(() => {
+    try {
+      const res = await fetch(`http://localhost:4000/api/orders/rate/${orderId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify({ rating, review }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("Rating submitted successfully!");
+        setRatingModal(null);
+        setRating(0);
+        setReview("");
+        // Refresh orders
+        fetchOrders();
+      } else {
+        alert(data.error || "Failed to submit rating");
+      }
+    } catch (err) {
+      console.error("Rating error:", err);
+      alert("Failed to submit rating");
+    }
+  };
+
+  const fetchOrders = () => {
     fetch("http://localhost:4000/my-orders", {
       headers: {
         "auth-token": token,
       },
     })
-      .then(res => res.json())
-      .then(data => setOrders(data))
-      .catch(err => console.error(err));
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    fetchOrders();
   }, []);
 
   if (orders.length === 0) {
-    return <h2 style={{ textAlign: "center" }}>No orders yet</h2>;
+    return <h2 style={{ textAlign: "center", marginTop: "50px" }}>No orders yet</h2>;
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="orders-container">
       <h2>Your Orders</h2>
 
-      {orders.map(order => (
-        <div
-          key={order._id}
-          style={{
-            border: "1px solid #ddd",
-            padding: "15px",
-            marginBottom: "20px",
-            borderRadius: "8px"
-          }}
-        >
-          <p><b>Order ID:</b> {order._id}</p>
-          <p><b>Date:</b> {new Date(order.createdAt).toDateString()}</p>
-          <p><b>Status:</b> {order.orderStatus}</p>
-          <p><b>Payment:</b> {order.paymentStatus}</p>
-          <p><b>Total:</b> ₹{order.totalAmount}</p>
+      {orders.map((order) => (
+        <div key={order._id} className="order-card">
+          <div className="order-header">
+            <div>
+              <p><b>Order ID:</b> {order._id}</p>
+              <p><b>Date:</b> {new Date(order.createdAt).toDateString()}</p>
+            </div>
+            <div className="order-actions">
+              <button className="download-btn" onClick={() => downloadInvoice(order._id)}>
+                Download Invoice
+              </button>
+              {!order.rating && (
+                <button className="rate-btn" onClick={() => setRatingModal(order._id)}>
+                  Rate Order
+                </button>
+              )}
+              {order.rating && (
+                <div className="rating-display">
+                  <span>⭐ {order.rating}/5</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="order-status">
+            <span className={`status-badge status-${order.orderStatus.toLowerCase()}`}>
+              {order.orderStatus}
+            </span>
+            <span><b>Payment:</b> {order.paymentStatus}</span>
+            <span><b>Total:</b> ₹{order.totalAmount}</span>
+          </div>
 
           <hr />
 
-          {order.items.map((item, index) => (
-            <div key={index} style={{ display: "flex", marginBottom: "10px" }}>
-              <img
-                src={`http://localhost:4000${item.image}`}
-                alt={item.name}
-                width="60"
-                style={{ marginRight: "10px" }}
-              />
-              <div>
-                <p>{item.name}</p>
-                <p>
-                  ₹{item.price} × {item.quantity}
-                </p>
-                <button onClick={() => downloadInvoice(order._id)}>
-  Download Invoice
-</button>
-
+          <div className="order-items">
+            {order.items.map((item, index) => (
+              <div key={index} className="order-item">
+                <img
+                  src={`http://localhost:4000${item.image}`}
+                  alt={item.name}
+                />
+                <div className="item-details">
+                  <p className="item-name">{item.name}</p>
+                  <p className="item-price">
+                    ₹{item.price} × {item.quantity}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       ))}
+
+      {/* Rating Modal */}
+      {ratingModal && (
+        <div className="rating-modal-overlay" onClick={() => setRatingModal(null)}>
+          <div className="rating-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Rate Your Order</h3>
+            <div className="star-rating">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`star ${rating >= star ? "filled" : ""}`}
+                  onClick={() => setRating(star)}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <textarea
+              placeholder="Write your review (optional)"
+              value={review}
+              onChange={(e) => setReview(e.target.value)}
+              rows="4"
+            />
+            <div className="modal-actions">
+              <button className="submit-btn" onClick={() => submitRating(ratingModal)}>
+                Submit
+              </button>
+              <button className="cancel-btn" onClick={() => setRatingModal(null)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
