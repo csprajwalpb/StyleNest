@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
 const fetchUser = require("../middleware/fetchUser");
-const generateInvoice = require("../utils/invoiceGenerator");
+const generateInvoiceBuffer = require("../utils/invoiceGenerator");
 
 // GET invoice PDF
 router.get("/invoice/:orderId", fetchUser, async (req, res) => {
