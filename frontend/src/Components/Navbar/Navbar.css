@@ -14,88 +14,79 @@
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 8px 32px var(--shadow-color);
-    padding: 25px 90px;
+    padding: 15px 50px; /* Slightly reduced padding for better desktop fit */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
     border-radius: 0 0 20px 20px;
     backdrop-filter: blur(var(--blur-strength));
     -webkit-backdrop-filter: blur(var(--blur-strength));
     border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: all var(--transition-speed) ease;
+    transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     position: relative;
-    overflow: hidden;
+    z-index: 100; /* Ensure nav stays on top */
 }
 
-.nav::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
-    transition: left 0.5s ease;
-}
-
-.nav:hover::before {
-    left: 100%;
+/* Enhanced hover effect for the entire nav bar */
+.nav:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow on hover */
+    backdrop-filter: blur(calc(var(--blur-strength) + 2px)); /* Subtle increase in blur */
+    -webkit-backdrop-filter: blur(calc(var(--blur-strength) + 2px));
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
-    gap: 20px;
-    transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
-    z-index: 1;
+    gap: 15px;
+    text-decoration: none;
+    transition: transform var(--transition-speed) ease;
 }
 
+/* Enhanced hover effect for logo */
 .nav-logo:hover {
-    transform: scale(1.1) rotate(2deg);
-    filter: brightness(1.1);
+    transform: scale(1.05); /* Subtle scale up on hover */
 }
 
 .nav-logo img {
-    width: 55px;
-    filter: drop-shadow(0 4px 8px var(--shadow-color)) hue-rotate(0deg);
-    transition: all var(--transition-speed) ease;
+    width: 50px;
+    filter: drop-shadow(0 4px 8px var(--shadow-color));
     border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;
+    transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
+/* Enhanced hover effect for logo image */
 .nav-logo img:hover {
-    filter: drop-shadow(0 8px 16px var(--shadow-color)) hue-rotate(45deg);
-    transform: rotate(360deg);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2)); /* Stronger shadow */
+    transform: rotate(5deg); /* Fun rotate effect */
 }
 
 .nav-logo p {
     color: var(--text-color);
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 800;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 4px 8px var(--shadow-color);
-    animation: textGlow 3s ease-in-out infinite alternate;
+    margin: 0; /* Remove default p margin */
+    transition: background var(--transition-speed) ease;
 }
 
-@keyframes textGlow {
-    from { filter: drop-shadow(0 0 5px var(--primary-color)); }
-    to { filter: drop-shadow(0 0 20px var(--secondary-color)); }
+/* Enhanced hover effect for logo text */
+.nav-logo p:hover {
+    background: linear-gradient(45deg, var(--accent-color), var(--primary-color), var(--secondary-color)); /* Reverse gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 60px;
-    color: #7f8c8d;
+    gap: 30px; /* Adjust gap between items */
+    margin: 0;
+    padding: 0;
     font-size: 20px;
     font-weight: 600;
     font-family: 'Roboto', sans-serif;
-    transition: all var(--transition-speed) ease;
-    z-index: 1;
 }
 
 .nav-menu li {
@@ -103,246 +94,188 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     cursor: pointer;
-    padding: 15px 20px;
-    border-radius: 15px;
-    transition: all var(--transition-speed) ease;
-    position: relative;
-    overflow: hidden;
+    padding: 5px 10px;
+    position: relative; /* Needed for absolute positioning of hr */
+    transition: transform var(--transition-speed) ease;
 }
 
-.nav-menu li::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
-    transition: all var(--transition-speed) ease;
-    transform: translateX(-50%);
-}
-
+/* Enhanced hover effect for menu items */
 .nav-menu li:hover {
-    background: rgba(52, 152, 219, 0.15);
+    transform: translateY(-2px); /* Lift effect */
+}
+
+.nav-menu li a {
+    color: #7f8c8d;
+    transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
+}
+
+/* Dynamic styles for active or hovered state */
+.nav-menu li.active a,
+.nav-menu li:hover a {
     color: var(--primary-color);
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 10px 30px var(--shadow-color);
+    text-shadow: 0 2px 4px rgba(52, 152, 219, 0.3); /* Subtle glow */
 }
 
-.nav-menu li:hover::after {
-    width: 100%;
-}
-
+/* ----- The Dynamic Underline Fix ----- */
 .nav-menu hr {
     border: none;
-    width: 0%;
-    height: 5px;
-    border-radius: 15px;
+    width: 0%; /* Hidden by default */
+    height: 4px;
+    border-radius: 10px;
     background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
-    transition: width var(--transition-speed) ease;
-    box-shadow: 0 0 10px var(--secondary-color);
+    transition: width var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: absolute; /* Takes it out of flow so it doesn't affect alignment */
+    bottom: -5px; /* Position just below text */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the hr */
 }
 
+/* Show hr when parent li has 'active' class or is hovered */
+.nav-menu li.active hr,
 .nav-menu li:hover hr {
-    width: 100%;
-    animation: hrGlow 1s ease-in-out infinite alternate;
+    width: 80%;
+    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.4); /* Glow effect on underline */
 }
-
-@keyframes hrGlow {
-    from { box-shadow: 0 0 10px var(--secondary-color); }
-    to { box-shadow: 0 0 20px var(--accent-color); }
-}
+/* ------------------------------------ */
 
 .nav-login-cart {
     display: flex;
     align-items: center;
-    gap: 40px;
-    z-index: 1;
+    gap: 20px;
 }
 
 .nav-login-cart button {
-    width: 140px;
-    height: 50px;
+    padding: 10px 20px;
     outline: none;
     border: 2px solid #bdc3c7;
     border-radius: 50px;
     color: var(--text-color);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     font-family: 'Roboto', sans-serif;
     background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
     cursor: pointer;
-    transition: all var(--transition-speed) ease;
-    box-shadow: 0 4px 15px var(--shadow-color);
-    position: relative;
-    overflow: hidden;
+    transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
-.nav-login-cart button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    transition: width 0.6s, height 0.6s;
-    transform: translate(-50%, -50%);
-}
-
-.nav-login-cart button:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
+/* Enhanced hover effect for buttons */
 .nav-login-cart button:hover {
     background: linear-gradient(135deg, var(--primary-color) 0%, #2980b9 100%);
     color: white;
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); /* Shadow for depth */
+    transform: translateY(-2px); /* Lift effect */
 }
 
-.nav-login-cart button:active {
-    background: #f3f3f3;
-    transform: translateY(0) scale(1);
+/* Cart Icon Container for positioning badge */
+.nav-cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .nav-login-cart img {
-    width: 45px;
-    filter: drop-shadow(0 4px 8px var(--shadow-color));
-    transition: all var(--transition-speed) ease;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) border-box;
+    width: 40px;
+    transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
 }
 
+/* Enhanced hover effect for cart icon */
 .nav-login-cart img:hover {
-    transform: scale(1.2) rotate(15deg);
-    filter: drop-shadow(0 8px 16px var(--shadow-color)) brightness(1.2);
+    transform: scale(1.1); /* Scale up */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); /* Shadow */
 }
 
 .nav-cart-count {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -40px;
-    margin-left: -50px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
     font-size: 12px;
     font-weight: 800;
-    background: linear-gradient(45deg, var(--secondary-color), #c0392b);
+    background: var(--secondary-color);
     color: white;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    animation: bounce 2s infinite;
     z-index: 2;
+    transition: transform var(--transition-speed) ease;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+/* Enhanced hover effect for cart count badge */
+.nav-cart-container:hover .nav-cart-count {
+    transform: scale(1.2); /* Scale up badge on container hover */
 }
 
+/* --- Mobile Dropdown Icon --- */
+/* Ensure it is hidden on desktop browser sizes */
 .nav-dropdown {
-    display: none;
-    width: 40px;
+    display: none; 
+    width: 35px;
     rotate: -90deg;
-    transition: all 0.5s ease;
+    transition: all 0.5s ease, transform var(--transition-speed) ease;
     cursor: pointer;
-    filter: drop-shadow(0 4px 8px var(--shadow-color));
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    padding: 5px;
 }
 
+/* Enhanced hover effect for dropdown icon */
 .nav-dropdown:hover {
-    filter: drop-shadow(0 8px 16px var(--shadow-color));
-    transform: rotate(-90deg) scale(1.1);
+    transform: scale(1.1) rotate(-90deg); /* Scale up while maintaining rotation */
 }
 
-/* -------- media query---------- */
+.nav-dropdown.open {
+    transform: rotate(90deg);
+}
+
+/* -------- Media Queries ---------- */
+
 @media (max-width: 900px) {
-    .nav {
-        padding: 25px 60px;
-    }
-    .nav-menu {
-        gap: 30px;
-    }
+    .nav { padding: 15px 30px; }
+    .nav-menu { gap: 20px; font-size: 18px; }
+    .nav-logo p { font-size: 26px; }
 }
 
+/* Trigger mobile menu view around tablet size */
 @media (max-width: 750px) {
-    .nav {
-        padding: 25px 40px;
-    }
-    .nav-login-cart {
-        gap: 25px;
-    }
     .nav-dropdown {
-        display: block;
-        width: 40px;
-        rotate: -90deg;
-        transition: 0.5s;
+        display: block; /* Only show on screens smaller than 750px */
     }
+
     .nav-menu {
-        display: none;
-        height: 100px;
-        width: 100%;
+        display: none; /* Hide default horizontal menu */
+        flex-direction: column;
         position: absolute;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
-        justify-content: center;
-        top: 80px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.98) 100%);
+        width: 100%;
+        top: 100%; /* Position directly below navbar */
         left: 0;
+        padding: 20px 0;
         box-shadow: 0 8px 32px var(--shadow-color);
         border-radius: 0 0 20px 20px;
-        backdrop-filter: blur(var(--blur-strength));
-        -webkit-backdrop-filter: blur(var(--blur-strength));
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        animation: slideDown 0.6s ease;
-        z-index: 10;
+        gap: 20px;
     }
+
+    /* Class added by JS when dropdown is clicked */
     .nav-menu-visible {
-        display: flex;
-        animation: slideUp 0.6s ease;
+        display: flex; 
+        animation: slideDown 0.4s ease forwards;
     }
-    .nav-dropdown.open {
-        transform: rotate(90deg);
-    }
-    .nav-cart-count {
-        margin-left: -35px;
+
+    .nav-menu hr { bottom: 0; } /* Adjust hr position for vertical layout */
+
+    .nav-login-cart button {
+        padding: 8px 15px;
+        font-size: 14px;
     }
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-30px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px) scale(0.9); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@media (max-width: 500px) {
-    .nav {
-        padding: 25px 25px;
-    }
-    .nav-logo img {
-        width: 40px;
-    }
-    .nav-logo p {
-        font-size: 24px;
-    }
-    .nav-menu-visible {
-        height: 90px;
-        top: 80px;
-    }
-    .nav-login-cart {
-        transform: scale(0.9);
-        gap: 20px;
-    }
+@media (max-width: 450px) {
+    .nav-logo p { display: none; /* Hide text on very small screens if needed */ }
+    .nav-login-cart { gap: 10px; }
 }
