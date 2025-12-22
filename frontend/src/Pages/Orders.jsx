@@ -15,6 +15,8 @@ const Orders = () => {
     }
   );
   if (!res.ok) {
+    const errText = await res.text();
+  console.error("Invoice download failed:", errText);
     alert("Failed to download invoice");
     return;
   }

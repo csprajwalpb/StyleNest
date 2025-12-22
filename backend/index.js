@@ -11,7 +11,8 @@ const crypto = require("crypto");
 const port = process.env.PORT || 4000;
 const Order = require("./models/Order");
 const nodemailer = require("nodemailer");
-
+const generateInvoiceBuffer = require("./utils/invoiceGenerator");
+const sendInvoiceEmail = require("./utils/sendInvoiceEmail");
 
 app.use(express.json());
 app.use(cors());
@@ -409,6 +410,12 @@ app.post("/verify-payment", fetchuser, async (req, res) => {
   });
 
   await order.save();
+  // Generate invoice PDF
+const pdfBuffer = await generateInvoiceBuffer(order);
+
+// Send invoice email
+await sendInvoiceEmail(order, user.email, pdfBuffer);
+
 
   // 5️⃣ Clear cart
   let emptyCart = {};
