@@ -35,8 +35,15 @@
         "Bodycon dresses",
         "Party dresses",
         "Casual dresses",
-        "Work dresses"
-      ]
+        "Work dresses",
+        "Ethnic dresses",
+        "Traditional wear"
+      ],
+      "ethnic_wear": {
+        "available": true,
+        "description": "Traditional and ethnic dresses including sarees, lehengas, kurtis, and Indo-western fusion wear",
+        "note": "Browse the Women's Collection to find ethnic dresses"
+      }
     },
     "kids": {
       "name": "Kids' Collection",

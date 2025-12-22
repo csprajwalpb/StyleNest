@@ -1,29 +1,83 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./ChatWidget.css";
 
-// Simple markdown parser component
-const MarkdownText = ({ content }) => {
-  // Parse markdown-like formatting
+// Enhanced markdown parser with clickable links
+const MarkdownText = ({ content, onNavigate }) => {
   const parseMarkdown = (text) => {
     const lines = text.split('\n');
-    return lines.map((line, i) => {
-      // Bold text: **text** or __text__
-      line = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-      line = line.replace(/__(.*?)__/g, '<strong>$1</strong>');
-      
-      // Bullet points: * or -
-      if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
-        line = '<li>' + line.trim().substring(2) + '</li>';
+    const elements = [];
+
+    lines.forEach((line, i) => {
+      // Check for route links - matches /mens, /womens, /kids, /cart, /login anywhere
+      const routeRegex = /\/(mens|womens|kids|cart|login)\b/gi;
+      const hasRoutes = routeRegex.test(line);
+
+      if (hasRoutes) {
+        // Reset regex lastIndex
+        routeRegex.lastIndex = 0;
+        
+        // Split by routes while keeping them
+        const parts = [];
+        let lastIndex = 0;
+        let match;
+        
+        while ((match = routeRegex.exec(line)) !== null) {
+          // Add text before the route
+          if (match.index > lastIndex) {
+            parts.push({ type: 'text', content: line.substring(lastIndex, match.index) });
+          }
+          // Add the route
+          parts.push({ type: 'route', content: match[0] });
+          lastIndex = match.index + match[0].length;
+        }
+        
+        // Add remaining text
+        if (lastIndex < line.length) {
+          parts.push({ type: 'text', content: line.substring(lastIndex) });
+        }
+        
+        const lineElements = parts.map((part, idx) => {
+          if (part.type === 'route') {
+            return (
+              <button
+                key={`${i}-${idx}`}
+                className="chat-link-button"
+                onClick={() => onNavigate(part.content)}
+              >
+                Go to {part.content}
+              </button>
+            );
+          } else {
+            // Apply markdown formatting
+            let formatted = part.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formatted = formatted.replace(/__(.*?)__/g, '<strong>$1</strong>');
+            return <span key={`${i}-${idx}`} dangerouslySetInnerHTML={{ __html: formatted }} />;
+          }
+        });
+        
+        elements.push(<div key={i} className="chat-line">{lineElements}</div>);
+      } else {
+        // Regular line without routes
+        let formatted = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formatted = formatted.replace(/__(.*?)__/g, '<strong>$1</strong>');
+        
+        if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+          formatted = '<li>' + formatted.trim().substring(2) + '</li>';
+        }
+        
+        elements.push(<div key={i} dangerouslySetInnerHTML={{ __html: formatted }} />);
       }
-      
-      return <div key={i} dangerouslySetInnerHTML={{ __html: line }} />;
     });
+
+    return elements;
   };
 
   return <div className="markdown-content">{parseMarkdown(content)}</div>;
 };
 
 const ChatWidget = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -35,6 +89,12 @@ const ChatWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Handle navigation from clickable links
+  const handleNavigate = (path) => {
+    navigate(path);
+    setIsOpen(false); // Close chat after navigation
+  };
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -226,7 +286,7 @@ const ChatWidget = () => {
             >
               <div className="chat-message-bubble">
                 {message.role === "bot" ? (
-                  <MarkdownText content={message.content} />
+                  <MarkdownText content={message.content} onNavigate={handleNavigate} />
                 ) : (
                   message.content
                 )}
