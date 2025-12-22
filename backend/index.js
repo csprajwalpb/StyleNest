@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, '../.env') }); 
+require("dotenv").config(); 
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cors = require("cors");
@@ -168,42 +168,48 @@ app.post('/signup', async (req, res) => {
 });
   
 //create endpoint for forget password 
+//create endpoint for forget password 
 app.post("/forgot-password", async (req, res) => {
-  const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-  const user = await Users.findOne({ email });
-  if (!user) {
-    // security best practice
-    return res.json({ message: "If account exists, reset link sent" });
-  }
+    const user = await Users.findOne({ email });
+    if (!user) {
+      return res.json({ message: "If account exists, reset link sent" });
+    }
 
-  const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
-  user.resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+    user.resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
 
-  user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
-  await user.save();
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+    await user.save();
 
-  const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: user.email,
-    subject: "Password Reset - StyleNest",
-    text: `
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "Password Reset - StyleNest",
+      text: `
 You requested a password reset.
 
 Click the link below:
 ${resetURL}
 
 This link expires in 15 minutes.
-    `,
-  });
+      `,
+    });
 
-  res.json({ message: "Password reset link sent to email" });
+    res.json({ message: "Password reset link sent to email" });
+
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    res.status(500).json({ error: "Failed to send reset email" });
+  }
 });
 
 
