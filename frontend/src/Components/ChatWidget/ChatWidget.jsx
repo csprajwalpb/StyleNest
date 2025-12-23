@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ChatWidget.css";
+import logo from "../Assets/logo.png";
 
 // Enhanced markdown parser with clickable links
 const MarkdownText = ({ content, onNavigate }) => {
@@ -209,19 +210,7 @@ const ChatWidget = () => {
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
+          <img src={logo} alt="StyleNest AI" className="chat-fab-logo" />
         )}
       </button>
 
@@ -231,23 +220,10 @@ const ChatWidget = () => {
         <div className="chat-header">
           <div className="chat-header-content">
             <div className="chat-avatar">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
+              <img src={logo} alt="StyleNest" className="chat-avatar-logo" />
             </div>
             <div>
-              <h3 className="chat-title">AI Assistant</h3>
+              <h3 className="chat-title">StyleNest AI</h3>
               <p className="chat-status">
                 {isLoading ? "Typing..." : "Online"}
               </p>

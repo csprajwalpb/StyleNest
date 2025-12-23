@@ -21,6 +21,12 @@
   z-index: 999;
 }
 
+.chat-fab-logo {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
 .chat-fab:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 28px rgba(102, 126, 234, 0.5);
@@ -93,6 +99,13 @@
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.chat-avatar-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .chat-title {
