@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react"; // Added hooks
 import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -24,12 +25,24 @@ export const backend_url = "http://localhost:4000";
 export const currency = "₹";
 
 function App() {
+  // Theme state logic
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   return (
     <Router>
-      <Navbar />
+      {/* Pass theme props to Navbar */}
+      <Navbar theme={theme} toggleTheme={toggleTheme} />
 
       <Routes>
-        {/* Shop */}
         <Route path="/" element={<Shop gender="all" />} />
         <Route
           path="/mens"
@@ -44,13 +57,9 @@ function App() {
           element={<ShopCategory banner={kid_banner} category="kid" />}
         />
 
-        {/* Product */}
         <Route path="/product/:productId" element={<Product />} />
-
-        {/* Cart */}
         <Route path="/cart" element={<Cart />} />
 
-        {/* 🔐 Protected Orders Route */}
         <Route
           path="/orders"
           element={
@@ -60,10 +69,7 @@ function App() {
           }
         />
 
-        {/* Auth */}
         <Route path="/login" element={<LoginSignup />} />
-
-        {/* 🔑 Reset Password */}
         <Route
           path="/reset-password/:token"
           element={<ResetPassword />}
@@ -71,8 +77,6 @@ function App() {
       </Routes>
 
       <Footer />
-
-      {/* 💬 Chat Widget */}
       <ChatWidget />
     </Router>
   );

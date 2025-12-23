@@ -1,152 +1,276 @@
-.nav{
+/* navbar.css */
+:root {
+    /* Changed from blue (#3498db) to the "Latest Collection" Red (#ff4141) */
+    --primary-color: #ff4141; 
+    --secondary-color: #ff4141; /* Keeping these consistent for a unified theme */
+    --accent-color: #ff4141;    /* Adjusted accent for a smoother gradient */
+    --text-color: #2c3e50;
+    --bg-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --blur-strength: 10px;
+    --transition-speed: 0.3s;
+}
+
+[data-theme='dark'] {
+    --primary-color: #ff4141; /* Keeping consistent, or adjust if needed for dark mode */
+    --secondary-color: #ff4141;
+    --accent-color: #ff4141;
+    --text-color: #ffffff;
+    --bg-color: #121212;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+    --blur-strength: 10px;
+    --transition-speed: 0.3s;
+}
+
+.nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 8px 32px var(--shadow-color);
+    padding: 15px 50px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
+    border-radius: 0 0 20px 20px;
+    backdrop-filter: blur(var(--blur-strength));
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    background: var(--nav-bg); /* Use the variable here */
+    color: var(--text-color);   /* Use the variable here */
     box-shadow: 0 1px 3px -2px black;
-    padding: 15px 70px;
 }
-.nav-logo{
+
+.nav:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(calc(var(--blur-strength) + 2px));
+    -webkit-backdrop-filter: blur(calc(var(--blur-strength) + 2px));
+}
+
+.nav-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    text-decoration: none;
+    transition: transform var(--transition-speed) ease;
 }
-.nav-logo img{
-    width: 45px;
+
+.nav-logo:hover {
+    transform: scale(1.05);
 }
-.nav-logo p{
-    color: #171717;
-    font-size: 28px;
-    font-weight: 600;
+
+.nav-logo img {
+    width: 50px;
+    filter: drop-shadow(0 4px 8px var(--shadow-color));
+    border-radius: 50%;
+    transition: filter var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
-.nav-menu{
+
+.nav-logo img:hover {
+    filter: drop-shadow(0 6px 12px rgba(255, 65, 65, 0.3)); 
+    transform: rotate(5deg);
+}
+
+.nav-logo p {
+    color: var(--text-color);
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    transition: background var(--transition-speed) ease;
+}
+
+.nav-menu {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 40px;
-    color: #626262;
-    font-size: 16px;
-    font-weight: 500;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
 }
 
-.nav-menu li{
+.nav-menu li {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
     cursor: pointer;
-}
-.nav-menu hr{
-    border: none;
-    width: 80%;
-    height: 3px;
-    border-radius: 10px;
-    background: #FF4141;
-}
-.nav-login-cart{
-    display: flex;
-    align-items: center;
-    gap: 30px;
+    padding: 5px 10px;
+    position: relative;
+    transition: transform var(--transition-speed) ease;
 }
 
-.nav-login-cart button{
-    width: 120px;
-    height: 40px;
+.nav-menu li:hover {
+    transform: translateY(-2px);
+}
+
+.nav-menu li a {
+    color: #7f8c8d;
+    transition: color var(--transition-speed) ease, text-shadow var(--transition-speed) ease;
+}
+
+.nav-menu li.active a,
+.nav-menu li:hover a {
+    color: var(--primary-color);
+    text-shadow: 0 2px 4px rgba(255, 65, 65, 0.2); 
+}
+
+.nav-menu hr {
+    border: none;
+    width: 0%;
+    height: 4px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    transition: width var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-menu li.active hr,
+.nav-menu li:hover hr {
+    width: 80%;
+    box-shadow: 0 2px 6px rgba(255, 65, 65, 0.4);
+}
+
+.nav-login-cart {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-login-cart button {
+    padding: 10px 20px;
+    outline: none;
+    border: 2px solid #bdc3c7;
+    border-radius: 50px;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Hover for buttons now matches the Latest Collection Red */
+.nav-login-cart button:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3);
+    transform: translateY(-2px);
     outline: none;
     border: 1px solid #7a7a7a;
     border-radius: 75px;
-    color: #515151;
-    font-size: 16px;
+    color: var(--text-color);
+    font-size: 20px;
     font-weight: 500;
-    background: white;
+    background: var(--bg-color);
     cursor: pointer;
 }
-.nav-login-cart button:active{
-    background: #f3f3f3;
+
+.nav-cart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
-.nav-login-cart img{
-    width: 35px;
+
+.nav-login-cart img {
+    width: 40px;
+    transition: transform var(--transition-speed) ease, filter var(--transition-speed) ease;
 }
-.nav-cart-count{
-    width: 18px;
-    height: 18px;
+
+.nav-login-cart img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(255, 65, 65, 0.2));
+}
+
+.nav-cart-count {
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -30px;
-    margin-left: -40px;
-    font-size: 14px;
-    background: red;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 12px;
+    font-weight: 800;
+    background: var(--primary-color);
     color: white;
-}
-.nav-dropdown{
-    display: none;
-}
-
-/* -------- media query---------- */
-@media(max-width:900px){
-    .nav{
-        padding: 15px 40px;
-    }
-    .nav-menu{
-        gap: 15px;
-    }
+    z-index: 2;
+    transition: transform var(--transition-speed) ease;
 }
 
-@media(max-width:750px){
-    .nav{
-        padding: 15px 20px;
-    }
-    .nav-login-cart{
-        gap: 15px;
-    }
-    .nav-dropdown{
-        display: block;
-        width: 30px;
-        rotate: -90deg;
-        transition: 0.5s;
-    } 
-    .nav-menu{
+/* Mobile styles remain the same but will automatically use the new color */
+.nav-dropdown {
+    display: none; 
+    width: 35px;
+    rotate: -90deg;
+    transition: all 0.5s ease;
+}
+
+@media (max-width: 750px) {
+    .nav-dropdown { display: block; }
+    .nav-menu {
         display: none;
-        height: 80px;
-        width: 100%;
+        flex-direction: column;
         position: absolute;
-        background-color: white;
-        justify-content: center;
-        top: 60px;
+        background: white;
+        width: 100%;
+        top: 100%;
         left: 0;
+        padding: 20px 0;
+        box-shadow: 0 8px 32px var(--shadow-color);
     }
-    .nav-menu-visible{
-        display: flex;
-    }
-    .nav-dropdown.open{
-        transform: rotate(90deg);
-    }
-    .nav-cart-count{
-        margin-left: -25px;
-    }
+    .nav-menu-visible { display: flex; animation: slideDown 0.4s ease forwards; }
 }
 
-@media(max-width:500px){
-    .nav{
-        padding: 15px 15px;
-    }
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    .nav-logo img{
-        width: 30px;
-    }
-    .nav-logo p{
-        font-size: 18px;
-    }
-    .nav-menu-visible{
-        height: 70px;
-        top: 60px;
-    }
-    .nav-login-cart{
-        transform: scale(0.8);
-    } 
-    .nav-login-cart{
-        gap: 10px;
-    }
+/* Dark mode overrides for navbar-specific elements */
+[data-theme='dark'] .nav-menu li a {
+    color: #cccccc; /* Lighter gray for inactive links in dark mode */
+}
+
+[data-theme='dark'] .nav-login-cart button {
+    border-color: #555555; /* Darker border for buttons in dark mode */
+    background: linear-gradient(135deg, #333333 0%, #555555 100%); /* Darker gradient for buttons */
+}
+
+[data-theme='dark'] .nav-menu {
+    background: var(--nav-bg); /* Ensure menu background uses nav-bg in dark mode */
+}
+
+[data-theme='dark'] .nav-menu-visible {
+    background: var(--nav-bg); /* For mobile dropdown */
+}
+
+/* Added for cart icon visibility in dark mode */
+[data-theme='dark'] .nav-login-cart img {
+    border: 2px solid #ff4141; /* Light border to make the cart icon visible in dark mode */
+    border-radius: 100px; /* Slight rounding for better aesthetics */
+    padding: 2px; /* Optional padding for better border visibility */
+}
+
+/* Added for logo image visibility in dark mode */
+[data-theme='dark'] .nav-logo img {
+    border: 2px solid #ff4141; /* Light border to make the logo image visible in dark mode */
+    border-radius: 50%; /* Maintains the circular shape */
+    padding: 2px; /* Optional padding for better border visibility */
 }

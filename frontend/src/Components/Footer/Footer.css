@@ -1,3 +1,4 @@
+/* Updated Footer.css (assuming this is the file for the .footer class) */
 .footer{
     display: flex;
     flex-direction: column;
@@ -12,12 +13,13 @@
     gap: 15px;
 }
 .footer-logo p{
-    color: #383838;
+    color: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
     font-size: 30px;
     font-weight: 700;
 }
 .footer-logo img{
     width: 50px;
+    border-radius: 100px;
 }
 .footer-links{
     display: flex;
@@ -25,7 +27,7 @@
     justify-content: center;
     list-style: none;
     gap: 40px;
-    color: #252525;
+    color: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
     font-size: 16px;
 }
 .footer-links li{
@@ -38,8 +40,8 @@
 .footer-icons-container{
     padding: 10px;
     padding-bottom: 6px;
-    background: #fbfbfb;
-    border: 1px solid #ebebeb;
+    background: var(--btn-bg); /* Updated to use theme variable for background in both modes */
+    border: 1px solid var(--text-color); /* Updated to use theme variable for border in both modes (subtle contrast) */
 }
 .footer-icons-container img{
     width: 25px;
@@ -51,7 +53,7 @@
     gap: 20px;
     width: 100%;
     margin-bottom: 30px;
-    color: #1a1a1a;
+    color: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
     font-size: 16px;
 }
 .footer-copyright hr{
@@ -59,7 +61,7 @@
     border: none;
     border-radius: 10px;
     height: 2px;
-    background: #c7c7c7;
+    background: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
 }
 @media(max-width:800px){
     .footer-links{

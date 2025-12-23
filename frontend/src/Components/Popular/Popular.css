@@ -1,3 +1,4 @@
+/* Updated Popular.css (assuming this is the file for the .popular class) */
 .popular{
     display: flex;
     flex-direction: column;
@@ -7,7 +8,7 @@
     margin: auto;
 }
 .popular h1{
-    color: #171717;
+    color: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
     font-size: 40px;
     font-weight: 600;
 }
@@ -15,7 +16,7 @@
     width: 150px;
     height: 4px;
     border-radius: 10px;
-    background: #252525;
+    background: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
 }
 .popular-item{
     margin-top: 40px;
