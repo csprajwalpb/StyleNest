@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"; // Added hooks
 import Navbar from "./Components/Navbar/Navbar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Shop from "./Pages/Shop";
 import Cart from "./Pages/Cart";
@@ -14,6 +14,7 @@ import Orders from "./Pages/Orders";
 import ResetPassword from "./Pages/ResetPassword";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ChatWidget from "./Components/ChatWidget/ChatWidget";
+import Wishlist from "./Components/Wishlist/Wishlist";
 
 // ✅ Assets
 import women_banner from "./Components/Assets/banner_women.png";
@@ -27,6 +28,7 @@ export const currency = "₹";
 function App() {
   // Theme state logic
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const token = localStorage.getItem("auth-token");
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -69,7 +71,12 @@ function App() {
           }
         />
 
-        <Route path="/wishlist" element={token ? <Wishlist /> : <Navigate to="/login" />} />
+        <Route 
+          path="/wishlist" 
+          element={
+            token ? <Wishlist /> : <Navigate to="/login" />
+          } 
+        />
 
         <Route path="/login" element={<LoginSignup />} />
         <Route
