@@ -1,7 +1,11 @@
+/* Updated Orders.css (assuming this is the file for the .orders-container class) */
 .orders-container {
   padding: 40px;
   max-width: 1200px;
   margin: 0 auto;
+  background: var(--bg-color); /* Updated for theme compatibility */
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .orders-header {
@@ -13,27 +17,30 @@
 
 .orders-container h2 {
   margin: 0;
-  color: #333;
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: color 0.3s ease;
 }
 
 .refresh-btn {
   padding: 10px 20px;
-  background: #2196F3;
+  background: #2196F3; /* Kept brand color, or update if needed */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
   font-size: 14px;
-  transition: all 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   display: flex;
   align-items: center;
   gap: 5px;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.2); /* Added shadow for depth */
 }
 
 .refresh-btn:hover {
   background: #1976D2;
-  transform: scale(1.05);
+  transform: scale(1.05); /* Enhanced scale */
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3); /* Enhanced shadow */
 }
 
 .refresh-btn:active {
@@ -41,12 +48,19 @@
 }
 
 .order-card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+  border-color: rgba(0, 0, 0, 0.1); /* Subtle border */
   padding: 20px;
   margin-bottom: 25px;
   border-radius: 10px;
-  background: white;
+  background: var(--btn-bg); /* Updated for theme compatibility */
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Premium shadow on hover */
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .order-header {
@@ -58,7 +72,9 @@
 
 .order-header p {
   margin: 5px 0;
-  color: #666;
+  color: var(--text-color); /* Updated for theme compatibility, with opacity */
+  opacity: 0.8;
+  transition: color 0.3s ease;
 }
 
 .order-actions {
@@ -73,7 +89,8 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: 500;
-  transition: all 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
 
 .download-btn {
@@ -83,6 +100,8 @@
 
 .download-btn:hover {
   background: #45a049;
+  transform: translateY(-2px); /* Premium lift */
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3); /* Enhanced shadow */
 }
 
 .rate-btn {
@@ -92,6 +111,8 @@
 
 .rate-btn:hover {
   background: #e68900;
+  transform: translateY(-2px); /* Premium lift */
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3); /* Enhanced shadow */
 }
 
 .rating-display {
@@ -113,6 +134,7 @@
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
+  transition: all 0.3s ease;
 }
 
 .status-placed {
@@ -130,6 +152,10 @@
   color: #388e3c;
 }
 
+.status-badge:hover {
+  transform: scale(1.05); /* Premium scale on hover */
+}
+
 .order-items {
   display: flex;
   flex-wrap: wrap;
@@ -140,10 +166,19 @@
 .order-item {
   display: flex;
   gap: 10px;
-  background: #f9f9f9;
+  background: var(--btn-bg); /* Updated for theme compatibility */
   padding: 10px;
   border-radius: 8px;
   min-width: 250px;
+  border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+  border-color: rgba(0, 0, 0, 0.1); /* Subtle border */
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.order-item:hover {
+  transform: translateY(-3px); /* Premium lift */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 .order-item img {
@@ -151,6 +186,11 @@
   height: 80px;
   object-fit: cover;
   border-radius: 5px;
+  transition: transform 0.3s ease;
+}
+
+.order-item img:hover {
+  transform: scale(1.05); /* Premium scale */
 }
 
 .item-details {
@@ -162,12 +202,19 @@
 .item-name {
   font-weight: 500;
   margin: 0 0 5px 0;
-  color: #333;
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: color 0.3s ease;
+}
+
+.item-name:hover {
+  color: #ff4141; /* Brand color on hover */
 }
 
 .item-price {
-  color: #666;
+  color: var(--text-color); /* Updated for theme compatibility, with opacity */
   margin: 0;
+  opacity: 0.8;
+  transition: color 0.3s ease;
 }
 
 /* Rating Modal */
@@ -185,18 +232,21 @@
 }
 
 .rating-modal {
-  background: white;
+  background: var(--btn-bg); /* Updated for theme compatibility */
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 400px;
   width: 90%;
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .rating-modal h3 {
   margin-top: 0;
   text-align: center;
-  color: #333;
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: color 0.3s ease;
 }
 
 .star-rating {
@@ -210,7 +260,7 @@
   font-size: 40px;
   cursor: pointer;
   color: #ddd;
-  transition: color 0.2s;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .star.filled {
@@ -219,16 +269,26 @@
 
 .star:hover {
   color: #ffb74d;
+  transform: scale(1.1); /* Premium scale on hover */
 }
 
 .rating-modal textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+  border-color: rgba(0, 0, 0, 0.2); /* Subtle border */
   border-radius: 5px;
   font-family: inherit;
   resize: vertical;
   margin-bottom: 15px;
+  background: var(--bg-color); /* Updated for theme compatibility */
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.rating-modal textarea:focus {
+  border-color: #ff4141; /* Brand color on focus */
+  box-shadow: 0 0 8px rgba(255, 65, 65, 0.3); /* Premium glow */
 }
 
 .modal-actions {
@@ -243,7 +303,8 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
 
 .submit-btn {
@@ -253,6 +314,8 @@
 
 .submit-btn:hover {
   background: #45a049;
+  transform: translateY(-2px); /* Premium lift */
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3); /* Enhanced shadow */
 }
 
 .cancel-btn {
@@ -262,4 +325,55 @@
 
 .cancel-btn:hover {
   background: #da190b;
+  transform: translateY(-2px); /* Premium lift */
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3); /* Enhanced shadow */
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .order-card {
+  background: var(--btn-bg); /* Dark background for cards */
+  border-color: rgba(255, 255, 255, 0.2); /* Subtle border for contrast */
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Adjusted shadow */
+}
+
+[data-theme='dark'] .order-card:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); /* Lighter shadow in dark mode */
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme='dark'] .order-item {
+  background: var(--btn-bg); /* Dark background for items */
+  border-color: rgba(255, 255, 255, 0.2); /* Subtle border */
+}
+
+[data-theme='dark'] .order-item:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); /* Lighter shadow */
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme='dark'] .rating-modal-overlay {
+  background: rgba(0, 0, 0, 0.7); /* Darker overlay in dark mode */
+}
+
+[data-theme='dark'] .rating-modal {
+  background: var(--btn-bg); /* Dark background for modal */
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Adjusted shadow */
+}
+
+[data-theme='dark'] .rating-modal textarea {
+  background: var(--btn-bg); /* Dark background for textarea */
+  border-color: rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+[data-theme='dark'] .rating-modal textarea:focus {
+  border-color: #ff4141; /* Brand color remains */
+  box-shadow: 0 0 8px rgba(255, 65, 65, 0.5); /* Brighter glow in dark mode */
+}
+
+[data-theme='dark'] .download-btn, [data-theme='dark'] .rate-btn, [data-theme='dark'] .submit-btn, [data-theme='dark'] .cancel-btn {
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Adjusted shadows for dark mode */
+}
+
+[data-theme='dark'] .download-btn:hover, [data-theme='dark'] .rate-btn:hover, [data-theme='dark'] .submit-btn:hover, [data-theme='dark'] .cancel-btn:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); /* Lighter shadows on hover */
 }
