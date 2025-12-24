@@ -1,20 +1,27 @@
+/* Updated Wishlist.css (assuming this is the file for the .wishlist-container class) */
 .wishlist-container {
   max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
+  background: var(--bg-color); /* Updated for theme compatibility */
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .wishlist-container h2 {
   text-align: center;
   margin-bottom: 30px;
   font-size: 32px;
-  color: #333;
+  color: var(--text-color); /* Updated for theme compatibility */
+  transition: color 0.3s ease;
 }
 
 .wishlist-container p {
   text-align: center;
-  color: #666;
+  color: var(--text-color); /* Updated for theme compatibility, with opacity for subtlety */
   font-size: 16px;
+  opacity: 0.8;
+  transition: color 0.3s ease;
 }
 
 .wishlist-grid {
@@ -25,17 +32,19 @@
 }
 
 .wishlist-item {
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+  border-color: rgba(0, 0, 0, 0.1); /* Subtle border */
   border-radius: 10px;
   padding: 15px;
-  background: white;
+  background: var(--btn-bg); /* Updated for theme compatibility */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .wishlist-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: #ff4141; /* Brand color on hover for premium feel */
 }
 
 .wishlist-item img {
@@ -44,6 +53,12 @@
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wishlist-item img:hover {
+  transform: scale(1.05); /* Premium scale effect */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .wishlist-item-details {
@@ -53,13 +68,18 @@
 .product-name {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: var(--text-color); /* Updated for theme compatibility */
   margin: 10px 0;
+  transition: color 0.3s ease;
+}
+
+.product-name:hover {
+  color: #ff4141; /* Brand color on hover */
 }
 
 .product-price {
   font-size: 18px;
-  color: #ff4141;
+  color: #ff4141; /* Kept brand color */
   font-weight: bold;
   margin: 10px 0;
 }
@@ -67,16 +87,43 @@
 .remove-btn {
   width: 100%;
   padding: 10px;
-  background: #ff4141;
+  background: #ff4141; /* Kept brand color */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
-  transition: background 0.3s;
+  transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 65, 65, 0.2); /* Added shadow for depth */
   margin-top: 10px;
 }
 
 .remove-btn:hover {
   background: #e63939;
+  transform: translateY(-2px); /* Premium lift effect */
+  box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3); /* Enhanced shadow */
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .wishlist-item {
+  background: var(--btn-bg); /* Dark background for cards */
+  border-color: rgba(255, 255, 255, 0.2); /* Subtle border for contrast */
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Adjusted shadow */
+}
+
+[data-theme='dark'] .wishlist-item:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15); /* Lighter shadow in dark mode */
+  border-color: #ff4141; /* Brand color remains */
+}
+
+[data-theme='dark'] .wishlist-item img:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Adjusted shadow for dark mode */
+}
+
+[data-theme='dark'] .remove-btn {
+  box-shadow: 0 2px 8px rgba(255, 65, 65, 0.3); /* Consistent shadow */
+}
+
+[data-theme='dark'] .remove-btn:hover {
+  box-shadow: 0 4px 12px rgba(255, 65, 65, 0.4); /* Brighter shadow in dark mode */
 }
