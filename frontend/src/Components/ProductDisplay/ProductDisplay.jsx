@@ -1,3 +1,4 @@
+// ProductDisplay.jsx
 import React, { useContext, useState } from "react";
 import "./ProductDisplay.css";
 import star_icon from "../Assets/star_icon.png";
@@ -12,6 +13,7 @@ const ProductDisplay = ({product}) => {
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
   const [showWishlistPopup, setShowWishlistPopup] = useState(false);
+  const [showCartPopup, setShowCartPopup] = useState(false); // Added for cart popup
 
   const handleAddToWishlist = async () => {
     try {
@@ -32,12 +34,25 @@ const ProductDisplay = ({product}) => {
     }
   };
 
+  const handleAddToCart = () => {
+    addToCart(product.id); // Assuming addToCart is synchronous or handles its own logic
+    setShowCartPopup(true);
+    setTimeout(() => setShowCartPopup(false), 3000);
+  };
+
   return (
     <div className="productdisplay">
       {/* Wishlist Popup */}
       {showWishlistPopup && (
         <div className="wishlist-popup">
           <span>✓ Added to Wishlist!</span>
+        </div>
+      )}
+      
+      {/* Cart Popup */}
+      {showCartPopup && (
+        <div className="cart-popup">
+          <span>✓ Added to Cart!</span>
         </div>
       )}
       
@@ -87,7 +102,7 @@ const ProductDisplay = ({product}) => {
           >
             {isAddingToWishlist ? "⏳ Adding to Wishlist..." : wishlistAdded ? "✓ Added to Wishlist" : "❤️ Add to Wishlist"}
           </button>
-          <button onClick={()=>addToCart(product.id)}>ADD TO CART</button>
+          <button onClick={handleAddToCart}>ADD TO CART</button> {/* Updated onClick */}
         </div>
         <p className="productdisplay-right-category"><span>Category :</span> Women, T-shirt, Crop Top</p>
         <p className="productdisplay-right-category"><span>Tags :</span> Modern, Latest</p>
