@@ -13,12 +13,16 @@ const Order = require("./models/Order");
 const nodemailer = require("nodemailer");
 const generateInvoiceBuffer = require("./utils/invoiceGenerator");
 const sendInvoiceEmail = require("./utils/sendInvoiceEmail");
+const wishlistRoutes = require("./routes/wishlist");
 
 app.use(express.json());
 app.use(cors());
 
 const orderRoutes = require("./routes/order");
 app.use("/api/orders", orderRoutes);
+
+// Wishlist Routes
+app.use("/api/wishlist", wishlistRoutes);
 
 // Database Connection With MongoDB
 mongoose.connect(process.env.MONGO_URI)

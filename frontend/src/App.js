@@ -69,6 +69,8 @@ function App() {
           }
         />
 
+        <Route path="/wishlist" element={token ? <Wishlist /> : <Navigate to="/login" />} />
+
         <Route path="/login" element={<LoginSignup />} />
         <Route
           path="/reset-password/:token"

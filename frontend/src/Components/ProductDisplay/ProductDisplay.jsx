@@ -49,6 +49,9 @@ const ProductDisplay = ({product}) => {
             <div>XXL</div>
           </div>
         </div>
+        <button onClick={() => addToWishlist(product._id)}>
+  ❤️ 
+</button>
         <button onClick={()=>addToCart(product.id)}>ADD TO CART</button>
         <p className="productdisplay-right-category"><span>Category :</span> Women, T-shirt, Crop Top</p>
         <p className="productdisplay-right-category"><span>Tags :</span> Modern, Latest</p>
