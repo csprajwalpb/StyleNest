@@ -65,9 +65,14 @@ const Navbar = ({ theme, toggleTheme }) => {
           : <Link to='/login' style={{ textDecoration: 'none' }}><button>Login</button></Link>}
 
         {token && (
-          <Link to="/orders" style={{ textDecoration: "none" }}>
-            <button>My Orders</button>
-          </Link>
+          <>
+            <Link to="/wishlist" style={{ textDecoration: "none" }}>
+              <button>Wishlist</button>
+            </Link>
+            <Link to="/orders" style={{ textDecoration: "none" }}>
+              <button>My Orders</button>
+            </Link>
+          </>
         )}
 
         <div className="nav-cart-container">
