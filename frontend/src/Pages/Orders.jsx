@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./CSS/Orders.css";
+import { backend_url } from "../config";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -11,7 +12,7 @@ const Orders = () => {
   // Function to download invoice PDF
   const downloadInvoice = async (orderId) => {
     const res = await fetch(
-      `http://localhost:4000/api/orders/invoice/${orderId}`,
+      `${backend_url}/api/orders/invoice/${orderId}`,
       {
         headers: {
           "auth-token": localStorage.getItem("auth-token"),
@@ -46,7 +47,7 @@ const Orders = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:4000/api/orders/rate/${orderId}`, {
+      const res = await fetch(`${backend_url}/api/orders/rate/${orderId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,7 @@ const Orders = () => {
   };
 
   const fetchOrders = () => {
-    fetch("http://localhost:4000/my-orders", {
+    fetch(`${backend_url}/my-orders`, {
       headers: {
         "auth-token": token,
       },
@@ -145,7 +146,7 @@ const Orders = () => {
             {order.items.map((item, index) => (
               <div key={index} className="order-item">
                 <img
-                  src={`http://localhost:4000${item.image}`}
+                  src={`${backend_url}${item.image}`}
                   alt={item.name}
                 />
                 <div className="item-details">

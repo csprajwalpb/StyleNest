@@ -158,7 +158,7 @@
 
 .order-items {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column; /* Changed to column for vertical stacking */
   gap: 15px;
   margin-top: 15px;
 }

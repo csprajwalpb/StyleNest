@@ -185,7 +185,7 @@ app.post('/signup', async (req, res) => {
   
 //create endpoint for forget password 
 //create endpoint for forget password 
-app.post("/forgot-password", async (req, res) => {
+app.post("/forgotPassword", async (req, res) => {
   try {
     const { email } = req.body;
 
