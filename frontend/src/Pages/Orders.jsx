@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./CSS/Orders.css";
 import { backend_url } from "../config";
 
@@ -9,34 +9,51 @@ const Orders = () => {
   const [review, setReview] = useState("");
   const token = localStorage.getItem("auth-token");
 
-  // Function to download invoice PDF
-  const downloadInvoice = async (orderId) => {
-    const res = await fetch(
-      `${backend_url}/api/orders/invoice/${orderId}`,
-      {
-        headers: {
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-      }
-    );
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error("Invoice download failed:", errText);
-      alert("Failed to download invoice");
-      return;
+  // Fetch orders function
+  const fetchOrders = useCallback(async () => {
+    try {
+      const res = await fetch(`${backend_url}/my-orders`, {
+        headers: { "auth-token": token },
+      });
+      const data = await res.json();
+      setOrders(data);
+    } catch (err) {
+      console.error("Error fetching orders:", err);
     }
+  }, [token]);
 
-    const blob = await res.blob();
-    const url = window.URL.createObjectURL(blob);
+  // Initial fetch + auto-refresh
+  useEffect(() => {
+    fetchOrders();
+    const interval = setInterval(fetchOrders, 10000); // refresh every 10 sec
+    return () => clearInterval(interval);
+  }, [fetchOrders]);
 
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `invoice_${orderId}.pdf`;
-    document.body.appendChild(a);
-    a.click();
-
-    a.remove();
-    window.URL.revokeObjectURL(url);
+  // Download invoice PDF
+  const downloadInvoice = async (orderId) => {
+    try {
+      const res = await fetch(`${backend_url}/api/orders/invoice/${orderId}`, {
+        headers: { "auth-token": token },
+      });
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error("Invoice download failed:", errText);
+        alert("Failed to download invoice");
+        return;
+      }
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `invoice_${orderId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Invoice error:", err);
+      alert("Failed to download invoice");
+    }
   };
 
   // Submit rating
@@ -45,7 +62,6 @@ const Orders = () => {
       alert("Please select a rating");
       return;
     }
-
     try {
       const res = await fetch(`${backend_url}/api/orders/rate/${orderId}`, {
         method: "POST",
@@ -55,15 +71,13 @@ const Orders = () => {
         },
         body: JSON.stringify({ rating, review }),
       });
-
       const data = await res.json();
       if (data.success) {
         alert("Rating submitted successfully!");
         setRatingModal(null);
         setRating(0);
         setReview("");
-        // Refresh orders
-        fetchOrders();
+        fetchOrders(); // refresh orders
       } else {
         alert(data.error || "Failed to submit rating");
       }
@@ -72,28 +86,6 @@ const Orders = () => {
       alert("Failed to submit rating");
     }
   };
-
-  const fetchOrders = () => {
-    fetch(`${backend_url}/my-orders`, {
-      headers: {
-        "auth-token": token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setOrders(data))
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchOrders();
-    
-    // Auto-refresh every 10 seconds to get latest order status
-    const interval = setInterval(() => {
-      fetchOrders();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   if (orders.length === 0) {
     return <h2 style={{ textAlign: "center", marginTop: "50px" }}>No orders yet</h2>;
@@ -145,10 +137,7 @@ const Orders = () => {
           <div className="order-items">
             {order.items.map((item, index) => (
               <div key={index} className="order-item">
-                <img
-                  src={`${backend_url}${item.image}`}
-                  alt={item.name}
-                />
+                <img src={`${backend_url}${item.image}`} alt={item.name} />
                 <div className="item-details">
                   <p className="item-name">{item.name}</p>
                   <p className="item-price">
