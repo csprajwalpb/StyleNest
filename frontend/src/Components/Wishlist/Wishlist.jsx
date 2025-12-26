@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getWishlist, removeFromWishlist } from "../../services/wishlist";
 import "./Wishlist.css";
+import { backend_url } from "../../config";
+
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -51,7 +53,7 @@ const Wishlist = () => {
       <div className="wishlist-grid">
         {wishlist.map(product => (
           <div key={product._id} className="wishlist-item">
-            <img src={`http://localhost:4000${product.image}`} alt={product.name} />
+            <img src={`${backend_url}${product.image}`} alt={product.name} />
             <div className="wishlist-item-details">
               <p className="product-name">{product.name}</p>
               <p className="product-price">₹{product.new_price}</p>

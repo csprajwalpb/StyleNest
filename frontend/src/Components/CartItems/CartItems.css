@@ -1,9 +1,14 @@
+/* Updated CartItems.css */
 .cartitems{
     margin: 100px 10%;
+    background: var(--bg-color); /* Updated for theme compatibility */
+    color: var(--text-color); /* Updated for theme compatibility */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .cartitems hr{
     height: 2px;
-    background: #e2e2e2;
+    background: var(--text-color); /* Updated for theme compatibility, with opacity */
+    opacity: 0.3;
     border: 0;
 }
 .cartitems-format-main{
@@ -12,28 +17,45 @@
     align-items: center;
     gap: 50px;
     padding: 20px 0px;
-    color: #454545;
+    color: var(--text-color); /* Updated for theme compatibility */
     font-size: 16px;
     font-weight: 600;
 }
 .cartitems-format{
-    
     font-size: 16px;
     font-weight: 500;
+    color: var(--text-color); /* Updated for theme compatibility */
 }
 .cartitems-product-icon{
     height: 55px;
+    transition: transform 0.3s ease;
+}
+.cartitems-product-icon:hover {
+    transform: scale(1.05); /* Premium scale on hover */
 }
 .cartitems-remove-icon{
     width: 12px;
     margin: 0px 30px;
     cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.cartitems-remove-icon:hover {
+    transform: scale(1.2); /* Premium scale on hover */
+    color: #ff4141; /* Brand color on hover */
 }
 .cartitems-quantity{
     width: 55px;
     height: 45px;
-    border: 2px solid #ebebeb;
-    background: #fff;
+    border: 2px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+    border-color: rgba(0, 0, 0, 0.2); /* Subtle border */
+    background: var(--bg-color); /* Updated for theme compatibility */
+    color: var(--text-color); /* Updated for theme compatibility */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cartitems-quantity:focus {
+    border-color: #ff4141; /* Brand color on focus */
+    box-shadow: 0 0 8px rgba(255, 65, 65, 0.3); /* Premium glow */
 }
 .cartitems-down{
     display: flex;
@@ -50,25 +72,36 @@
     display: flex;
     justify-content: space-between;
     padding: 12px 0px;
+    color: var(--text-color); /* Updated for theme compatibility */
 }
 .cartitems-total button{
     width: 220px;
     height: 50px;
     outline: none;
     border: none;
-    background: #ff5a5a;
+    background: #ff5a5a; /* Kept brand color */
     color: #fff;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    border-radius: 6px; /* Slightly rounded for premium feel */
+    transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 90, 90, 0.3); /* Added shadow for depth */
+}
+.cartitems-total button:hover {
+    background: #e63939; /* Darker shade */
+    transform: translateY(-3px); /* Premium lift */
+    box-shadow: 0 6px 20px rgba(255, 90, 90, 0.4); /* Enhanced shadow */
 }
 .cartitems-promocode{
     flex: 1;
     font-size: 16px;
     font-weight: 500;
+    color: var(--text-color); /* Updated for theme compatibility */
 }
 .cartitems-promocode p{
-    color: #555;
+    color: var(--text-color); /* Updated for theme compatibility, with opacity */
+    opacity: 0.8;
 }
 .cartitems-promobox{
     display: flex;
@@ -77,7 +110,14 @@
     width: 400px;
     margin-top: 15px;
     height: 50px;
-    background: #eaeaea;
+    background: var(--btn-bg); /* Updated for theme compatibility */
+    border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
+    border-color: rgba(0, 0, 0, 0.1); /* Subtle border */
+    border-radius: 6px; /* Added for premium feel */
+    transition: box-shadow 0.3s ease;
+}
+.cartitems-promobox:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Premium shadow on hover */
 }
 .cartitems-promobox input{
     border: none;
@@ -87,15 +127,66 @@
     flex: 1;
     height: 100%;
     padding-left: 20px;
+    color: var(--text-color); /* Updated for theme compatibility */
 }
 .cartitems-promobox button{
     width: 130px;
     height: 100%;
     font-size: 16px;
-    background: black;
-    color: white;
+    background: var(--text-color); /* Updated for theme compatibility */
+    color: var(--bg-color); /* Updated for contrast */
     cursor: pointer;
+    border: none;
+    border-radius: 0 4px 4px 0; /* Rounded corner for premium feel */
+    transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
 }
+.cartitems-promobox button:hover {
+    background: #ff4141; /* Brand color on hover */
+    color: white;
+    transform: translateY(-2px); /* Premium lift */
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3); /* Enhanced shadow */
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .cartitems-quantity {
+    background: var(--btn-bg); /* Dark background for input */
+    border-color: rgba(255, 255, 255, 0.3); /* Subtle border */
+}
+
+[data-theme='dark'] .cartitems-quantity:focus {
+    border-color: #ff4141; /* Brand color remains */
+    box-shadow: 0 0 8px rgba(255, 65, 65, 0.5); /* Brighter glow in dark mode */
+}
+
+[data-theme='dark'] .cartitems-promobox {
+    background: var(--btn-bg); /* Dark background for box */
+    border-color: rgba(255, 255, 255, 0.2); /* Subtle border */
+}
+
+[data-theme='dark'] .cartitems-promobox:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Lighter shadow in dark mode */
+}
+
+[data-theme='dark'] .cartitems-promobox button {
+    background: var(--text-color); /* Dark button background */
+    color: var(--bg-color); /* Light text */
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Adjusted shadow */
+}
+
+[data-theme='dark'] .cartitems-promobox button:hover {
+    background: #ff4141; /* Brand color remains */
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.4); /* Brighter shadow */
+}
+
+[data-theme='dark'] .cartitems-total button {
+    box-shadow: 0 4px 12px rgba(255, 90, 90, 0.4); /* Adjusted shadow */
+}
+
+[data-theme='dark'] .cartitems-total button:hover {
+    box-shadow: 0 6px 20px rgba(255, 90, 90, 0.5); /* Brighter shadow */
+}
+
 @media(max-width:1280px){
     .cartitems{
         margin: 60px 8%;

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ChatWidget.css";
 import logo from "../Assets/logo.png";
+import { backend_url } from "../../config";
+
 
 // Enhanced markdown parser with clickable links
 const MarkdownText = ({ content, onNavigate }) => {
@@ -140,7 +142,7 @@ const ChatWidget = () => {
         }));
 
       // Call backend API
-      const response = await fetch("http://localhost:4000/api/chat", {
+      const response = await fetch(`${backend_url}/api/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

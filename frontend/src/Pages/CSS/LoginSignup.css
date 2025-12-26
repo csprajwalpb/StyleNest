@@ -69,7 +69,7 @@
 }
 
 /* Forgot password link */
-.forgot-password {
+.forgotPassword {
     margin-top: 8px;
     font-size: 14px;
     color: #ff4141; /* Kept brand color */
@@ -78,7 +78,7 @@
     transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
-.forgot-password:hover {
+.forgotPassword:hover {
     text-decoration: underline;
     color: #e63946; /* Darker shade for premium hover */
     transform: scale(1.05); /* Subtle scale for premium feel */
@@ -196,7 +196,7 @@
         font-size: 17px;
     }
 
-    .forgot-password {
+    .forgotPassword {
         font-size: 13px;
     }
 }

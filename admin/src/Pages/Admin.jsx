@@ -5,6 +5,7 @@ import AddProduct from "../Components/AddProduct/AddProduct";
 import { Route, Routes } from "react-router-dom";
 import ListProduct from "../Components/ListProduct/ListProduct";
 import Orders from "./Orders";
+import Analytics from "../Components/Analytics/Analytics";
 
 const Admin = () => {
 
@@ -12,6 +13,7 @@ const Admin = () => {
     <div className="admin">
       <Sidebar />
       <Routes>
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/listproduct" element={<ListProduct />} />
         <Route path="/orders" element={<Orders />} />

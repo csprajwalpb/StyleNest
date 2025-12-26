@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { backend_url } from "../config";
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -19,7 +20,7 @@ const ResetPassword = () => {
       return;
     }
 
-    const res = await fetch(`http://localhost:4000/reset-password/${token}`, {
+    const res = await fetch(`${backend_url}/reset-password/${token}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

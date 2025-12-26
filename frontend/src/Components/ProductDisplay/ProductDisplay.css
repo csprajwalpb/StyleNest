@@ -1,8 +1,12 @@
+/* ProductDisplay.css */
 .productdisplay{
     display: flex;
     padding: 0px 10%;
     gap: 40px;
     justify-content: space-between;
+    background: var(--bg-color); /* Updated for theme compatibility */
+    color: var(--text-color); /* Updated for theme compatibility */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .productdisplay-left{
     display: flex;
@@ -16,10 +20,21 @@
 .productdisplay-img-list img{
     height: 110px;
     max-width: 120px;
+    border-radius: 8px; /* Added for premium feel */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.productdisplay-img-list img:hover {
+    transform: scale(1.05); /* Premium hover effect */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .productdisplay-main-img{
     height: 500px;
-    /* max-width: 420px; */
+    border-radius: 12px; /* Added for premium feel */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.productdisplay-main-img:hover {
+    transform: scale(1.02); /* Premium hover effect */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 .productdisplay-right{
     display: flex;
@@ -27,7 +42,7 @@
     flex: 1;
 }
 .productdisplay-right h1{
-    color: #3d3d3d;
+    color: var(--text-color); /* Updated for theme compatibility */
     font-size: 30px;
     font-weight: 700;
 }
@@ -36,7 +51,7 @@
     align-items: center;
     margin-top: 10px;
     gap: 5px;
-    color: #1c1c1c;
+    color: var(--text-color); /* Updated for theme compatibility */
     font-size: 14px;
 }
 .productdisplay-right-prices{
@@ -47,15 +62,21 @@
     font-weight: 700;
 }
 .productdisplay-right-price-old{
-    color: #818181;
+    color: var(--text-color); /* Updated for theme compatibility, with opacity for subtlety */
     text-decoration: line-through;
+    opacity: 0.7;
 }
 .productdisplay-right-price-new{
-    color: #ff4141;
+    color: #ff4141; /* Kept brand color */
+}
+.productdisplay-right-description{
+    color: var(--text-color); /* Updated for theme compatibility */
+    margin: 20px 0;
+    line-height: 1.6;
 }
 .productdisplay-right-size h1{
     margin-top: 30px;
-    color: #656565;
+    color: var(--text-color); /* Updated for theme compatibility */
     font-size: 18px;
     font-weight: 600;
 }
@@ -66,10 +87,20 @@
 }
 .productdisplay-right-sizes div{
     padding: 16px 20px;
-    background: #fbfbfb;
-    border: 1px solid #ebebeb;
+    background: var(--btn-bg); /* Updated for theme compatibility */
+    border: 1px solid var(--text-color); /* Updated for theme compatibility, with opacity */
     border-radius: 3px;
     cursor: pointer;
+    color: var(--text-color); /* Updated for theme compatibility */
+    font-weight: 600;
+    transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+.productdisplay-right-sizes div:hover {
+    background: #ff4141; /* Brand color on hover */
+    color: white;
+    border-color: #ff4141;
+    transform: translateY(-2px); /* Premium lift effect */
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3); /* Premium shadow */
 }
 
 .productdisplay-buttons {
@@ -85,26 +116,37 @@
     font-size: 16px;
     font-weight: 600;
     color: white;
-    background: #FF4141;
+    background: #FF4141; /* Kept brand color */
     margin-bottom: 0;
     border: none;
     outline: none;
     cursor: pointer;
-    transition: all 0.3s;
+    border-radius: 6px; /* Slightly more rounded for premium feel */
+    transition: all 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3); /* Added shadow for depth */
 }
 
 .productdisplay-right button:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px); /* Enhanced lift */
+    box-shadow: 0 6px 20px rgba(255, 65, 65, 0.4); /* Enhanced shadow */
+    background: linear-gradient(135deg, #ff4141, #ff6b6b); /* Gradient for flair */
 }
 
 .wishlist-btn {
     background: #667eea !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3); /* Matching shadow */
+}
+
+.wishlist-btn:hover {
+    background: linear-gradient(135deg, #667eea, #764ba2) !important; /* Gradient on hover */
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .wishlist-btn:disabled {
     background: #4caf50 !important;
     cursor: not-allowed;
     opacity: 0.8;
+    box-shadow: none;
 }
 
 .wishlist-popup {
@@ -128,6 +170,27 @@
     gap: 8px;
 }
 
+.cart-popup {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background: linear-gradient(135deg, #ff4141 0%, #ff6b6b 100%); /* Brand color gradient for cart popup */
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.3);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease-out;
+}
+
+.cart-popup span {
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 @keyframes slideInRight {
     from {
         transform: translateX(400px);
@@ -140,13 +203,36 @@
 }
 .productdisplay-right-category{
     margin-top: 10px;
+    color: var(--text-color); /* Updated for theme compatibility */
 }
 .productdisplay-right-category span{
     font-weight: 600;
 }
 
-/* ----- media query------- */
+/* Dark mode overrides */
+[data-theme='dark'] .productdisplay-right-sizes div {
+    background: var(--btn-bg); /* Ensure visibility in dark mode */
+    border-color: rgba(255, 255, 255, 0.3); /* Subtle border for contrast */
+    color: var(--text-color);
+}
 
+[data-theme='dark'] .productdisplay-right-sizes div:hover {
+    background: #ff4141; /* Brand color remains */
+    color: white;
+    border-color: #ff4141;
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.5); /* Brighter shadow in dark mode */
+}
+
+[data-theme='dark'] .productdisplay-img-list img:hover,
+[data-theme='dark'] .productdisplay-main-img:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); /* Adjusted shadow for dark mode */
+}
+
+[data-theme='dark'] .cart-popup {
+    box-shadow: 0 4px 12px rgba(255, 65, 65, 0.4); /* Adjusted shadow for dark mode */
+}
+
+/* ----- media query------- */
 
 @media(max-width:1024px){
     .productdisplay{

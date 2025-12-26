@@ -1,20 +1,26 @@
+/* RelatedProducts.css */
 .relatedproducts{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     padding: 10px 0 100px;
+    background: var(--bg-color); /* Updated for theme compatibility */
+    color: var(--text-color); /* Updated for theme compatibility */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .relatedproducts h1{
-    color: #171717;
+    color: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
     font-size: 40px;
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 .relatedproducts hr{
     width: 150px;
     height: 4px;
     border-radius: 10px;
-    background: #252525;
+    background: var(--text-color); /* Updated to use theme variable for visibility in both light and dark modes */
+    transition: background-color 0.3s ease;
 }
 .relatedproducts-item{
     margin-top: 50px;
@@ -26,6 +32,26 @@
     max-width: 1280px;
 }
 
+/* Premium hover effects for the title and hr */
+.relatedproducts h1:hover {
+    color: #ff4141; /* Brand color on hover for flair */
+    transform: scale(1.02); /* Subtle scale for premium feel */
+}
+
+.relatedproducts hr:hover {
+    background: linear-gradient(90deg, #ff4141, #ff6b6b); /* Gradient on hover */
+    width: 160px; /* Slight expansion */
+    transition: all 0.3s ease;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .relatedproducts h1 {
+    color: var(--text-color); /* Ensures white text in dark mode */
+}
+
+[data-theme='dark'] .relatedproducts hr {
+    background: var(--text-color); /* Ensures visible hr in dark mode */
+}
 
 @media(max-width:600px){
    

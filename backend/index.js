@@ -18,6 +18,14 @@ const promoRoutes = require("./routes/promo");
 
 app.use(express.json());
 app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001"
+  ],
+  credentials: true
+}));
+
 
 const orderRoutes = require("./routes/order");
 app.use("/api/orders", orderRoutes);
@@ -177,7 +185,7 @@ app.post('/signup', async (req, res) => {
   
 //create endpoint for forget password 
 //create endpoint for forget password 
-app.post("/forgot-password", async (req, res) => {
+app.post("/forgotPassword", async (req, res) => {
   try {
     const { email } = req.body;
 
@@ -484,7 +492,144 @@ app.get("/my-orders", fetchuser, async (req, res) => {
 });
 
 
+// Analytics API Endpoint
+app.get("/analytics", async (req, res) => {
+  try {
+    // Get total revenue
+    const revenueResult = await Order.aggregate([
+      { $match: { paymentStatus: "Paid" } },
+      { $group: { _id: null, total: { $sum: "$finalAmount" } } }
+    ]);
+    const totalRevenue = revenueResult.length > 0 ? revenueResult[0].total : 0;
+
+    // Get total orders
+    const totalOrders = await Order.countDocuments();
+
+    // Get total products
+    const totalProducts = await Product.countDocuments();
+
+    // Get total users
+    const totalUsers = await Users.countDocuments();
+
+    // Revenue by month (last 6 months)
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+    
+    const revenueByMonth = await Order.aggregate([
+      { 
+        $match: { 
+          paymentStatus: "Paid",
+          createdAt: { $gte: sixMonthsAgo }
+        } 
+      },
+      {
+        $group: {
+          _id: {
+            month: { $month: "$createdAt" },
+            year: { $year: "$createdAt" }
+          },
+          revenue: { $sum: "$finalAmount" }
+        }
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } }
+    ]);
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const formattedRevenueByMonth = revenueByMonth.map(item => ({
+      month: `${monthNames[item._id.month - 1]} ${item._id.year}`,
+      revenue: item.revenue
+    }));
+
+    // Orders by status
+    const ordersByStatus = await Order.aggregate([
+      {
+        $group: {
+          _id: "$orderStatus",
+          value: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const formattedOrdersByStatus = ordersByStatus.map(item => ({
+      name: item._id,
+      value: item.value
+    }));
+
+    // Top products (based on order frequency)
+    const topProductsData = await Order.aggregate([
+      { $unwind: "$items" },
+      {
+        $group: {
+          _id: "$items.productId",
+          name: { $first: "$items.name" },
+          sales: { $sum: "$items.quantity" }
+        }
+      },
+      { $sort: { sales: -1 } },
+      { $limit: 5 }
+    ]);
+
+    const formattedTopProducts = topProductsData.map(item => ({
+      name: item.name.substring(0, 20) + (item.name.length > 20 ? '...' : ''),
+      sales: item.sales
+    }));
+
+    // Category distribution
+    const categoryDistribution = await Product.aggregate([
+      {
+        $group: {
+          _id: "$category",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const formattedCategoryDistribution = categoryDistribution.map(item => ({
+      name: item._id,
+      count: item.count
+    }));
+
+    // Recent orders
+    const recentOrdersData = await Order.find()
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate('userId', 'name');
+
+    const formattedRecentOrders = recentOrdersData.map(order => ({
+      orderId: order._id.toString().substring(0, 8),
+      customerName: order.userId?.name || 'Guest',
+      date: order.createdAt,
+      amount: order.finalAmount,
+      status: order.orderStatus
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        totalRevenue,
+        totalOrders,
+        totalProducts,
+        totalUsers,
+        revenueByMonth: formattedRevenueByMonth,
+        ordersByStatus: formattedOrdersByStatus,
+        topProducts: formattedTopProducts,
+        categoryDistribution: formattedCategoryDistribution,
+        recentOrders: formattedRecentOrders
+      }
+    });
+
+  } catch (error) {
+    console.error("Analytics error:", error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Failed to fetch analytics data" 
+    });
+  }
+});
+
+
 // Starting Express Server
+const PORT = process.env.PORT || 4000;
 app.listen(port, (error) => {
   if (!error) console.log("Server Running on port " + port);
   else console.log("Error : ", error);

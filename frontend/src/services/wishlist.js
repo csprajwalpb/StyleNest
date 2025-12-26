@@ -1,4 +1,6 @@
-const API = "http://localhost:4000/api/wishlist";
+import { backend_url } from "../config";
+
+const API = `${backend_url}/api/wishlist`;
 
 export const addToWishlist = async (productId) => {
   return fetch(`${API}/add/${productId}`, {

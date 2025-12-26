@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
+import { backend_url } from "../config";
 
 const LoginSignup = () => {
   const [state, setState] = useState("Login"); // Login | Sign Up | Forgot
@@ -15,7 +16,7 @@ const LoginSignup = () => {
 
   const login = async () => {
     let dataObj;
-    await fetch("http://localhost:4000/login", {
+    await fetch(`${backend_url}/login`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -36,7 +37,7 @@ const LoginSignup = () => {
 
   const signup = async () => {
     let dataObj;
-    await fetch("http://localhost:4000/signup", {
+    await fetch(`${backend_url}/signup`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -56,7 +57,7 @@ const LoginSignup = () => {
   };
 
   const forgotPassword = async () => {
-    await fetch("http://localhost:4000/forgot-password", {
+    await fetch(`${backend_url}/forgotPassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,7 +111,7 @@ const LoginSignup = () => {
         </div>
 
         {state === "Login" && (
-          <p className="forgot-password" onClick={() => setState("Forgot")}>
+          <p className="forgotPassword" onClick={() => setState("Forgot")}>
             Forgot Password?
           </p>
         )}
