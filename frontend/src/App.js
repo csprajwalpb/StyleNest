@@ -9,20 +9,20 @@ import Footer from "./Components/Footer/Footer";
 import ShopCategory from "./Pages/ShopCategory";
 import LoginSignup from "./Pages/LoginSignup";
 
-// ✅ Newly added / fixed imports
+//  Newly added / fixed imports
 import Orders from "./Pages/Orders";
 import ResetPassword from "./Pages/ResetPassword";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ChatWidget from "./Components/ChatWidget/ChatWidget";
 import Wishlist from "./Components/Wishlist/Wishlist";
 
-// ✅ Assets
+//  Assets
 import women_banner from "./Components/Assets/banner_women.png";
 import men_banner from "./Components/Assets/banner_mens.png";
 import kid_banner from "./Components/Assets/banner_kids.png";
 
-// ✅ Constants
-export const backend_url = process.env.REACT_APP_API_URL;
+//  Constants
+export const backend_url = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 export const currency = "₹";
 
 function App() {
