@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./CSS/Orders.css";
+import { backend_url } from "../config";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -7,7 +8,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:4000/api/orders/all");
+      const res = await fetch(`${backend_url}/api/orders/all`);
       const data = await res.json();
       if (data.success) {
         setOrders(data.orders);
@@ -21,7 +22,7 @@ const Orders = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/orders/status/${orderId}`, {
+      const res = await fetch(`${backend_url}/api/orders/status/${orderId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +95,7 @@ const Orders = () => {
               <h4>Items:</h4>
               {order.items.map((item, index) => (
                 <div key={index} className="admin-item">
-                  <img src={`http://localhost:4000${item.image}`} alt={item.name} />
+                  <img src={`${backend_url}${item.image}`} alt={item.name} />
                   <div className="admin-item-details">
                     <p className="item-name">{item.name}</p>
                     <p>Qty: {item.quantity} × ₹{item.price}</p>
