@@ -1,0 +1,182 @@
+{
+    "user_account_features": {
+        "authentication": {
+            "signup": {
+                "description": "Create a new account",
+                "required_fields": [
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "url": "/login"
+            },
+            "login": {
+                "description": "Login to existing account",
+                "required_fields": [
+                    "email",
+                    "password"
+                ],
+                "url": "/login"
+            },
+            "logout": {
+                "description": "Logout from your account",
+                "location": "Logout button in top navigation (visible when logged in)"
+            },
+            "forgot_password": {
+                "description": "Reset password via email",
+                "process": [
+                    "Click 'Forgot Password?' on login page",
+                    "Enter your email address",
+                    "Check email for reset link",
+                    "Click link and set new password"
+                ],
+                "note": "Password reset links are sent to your registered email"
+            }
+        },
+        "cart": {
+            "description": "Shopping cart for managing products before checkout",
+            "features": {
+                "persistent": true,
+                "persistence_note": "Cart items are saved even after logout and restored on login",
+                "add_to_cart": "Click 'Add to Cart' on product pages",
+                "remove_from_cart": "Click remove icon in cart page",
+                "view_cart": "Click cart icon in navbar",
+                "quantity_management": "Quantity displayed for each item in cart"
+            },
+            "url": "/cart"
+        },
+        "wishlist": {
+            "description": "Save favorite products for later purchase",
+            "requires_authentication": true,
+            "url": "/wishlist",
+            "features": [
+                "Add products to wishlist from product pages",
+                "Remove products from wishlist",
+                "View all wishlist items in one place",
+                "Access via 'Wishlist' button in navbar (visible when logged in)"
+            ]
+        },
+        "orders": {
+            "description": "Complete order history and management",
+            "requires_authentication": true,
+            "url": "/orders",
+            "features": {
+                "view_history": "See all past and current orders",
+                "order_details": {
+                    "displayed_info": [
+                        "Order ID",
+                        "Order date",
+                        "Order status (Pending, Processing, Shipped, Delivered)",
+                        "Payment status",
+                        "Total amount",
+                        "Individual items with quantities and prices"
+                    ]
+                },
+                "invoice_download": {
+                    "description": "Download PDF invoices for orders",
+                    "how_to": "Click 'Download Invoice' button on any order",
+                    "automatic_email": "Invoices are automatically sent to your registered email after purchase"
+                },
+                "order_rating": {
+                    "description": "Rate and review your orders",
+                    "rating_scale": "1 to 5 stars",
+                    "how_to": "Click 'Rate Order' button on completed orders",
+                    "optional_review": "You can write a detailed review along with your star rating",
+                    "note": "Rating button only appears for orders that haven't been rated yet"
+                },
+                "auto_refresh": "Order page automatically refreshes every 10 seconds to show latest status"
+            }
+        },
+        "theme_preferences": {
+            "dark_mode": {
+                "description": "Toggle between light and dark themes",
+                "how_to_toggle": "Click the 🌙 (moon) or ☀️ (sun) emoji button in top navigation",
+                "persistence": "Your theme preference is saved and persists across sessions",
+                "benefits": "Comfortable viewing in different lighting conditions"
+            }
+        }
+    },
+    "shopping_features": {
+        "promo_codes": {
+            "description": "Apply discount codes for savings on your order",
+            "how_to_use": [
+                "Add items to cart",
+                "Go to cart page",
+                "Enter promo code in the promo code input box",
+                "Click 'Apply Promo' button",
+                "Discount will be applied to your total"
+            ],
+            "available_codes": {
+                "CHRISTMAS25": {
+                    "discount": "25% off",
+                    "description": "25% discount on total order amount"
+                }
+            },
+            "important_notes": [
+                "Promo codes are case-sensitive (must match exactly)",
+                "Apply promo code before proceeding to checkout",
+                "Discount is calculated on the cart total"
+            ]
+        },
+        "checkout": {
+            "payment_provider": "Razorpay",
+            "payment_methods": [
+                "Credit Cards",
+                "Debit Cards",
+                "UPI",
+                "Net Banking",
+                "Digital Wallets"
+            ],
+            "currency": "INR (Indian Rupees)",
+            "process": [
+                "Review cart items and total",
+                "Apply promo code if available",
+                "Click 'Proceed to Checkout'",
+                "Complete payment via Razorpay",
+                "Receive confirmation and invoice via email"
+            ],
+            "post_purchase": [
+                "Cart is automatically emptied after successful payment",
+                "Order is created and visible in My Orders",
+                "Invoice PDF is generated",
+                "Invoice is sent to registered email"
+            ]
+        }
+    },
+    "ui_enhancements": {
+        "animations": {
+            "description": "Premium animation system throughout the application",
+            "features": [
+                "Stagger animations for product lists",
+                "3D hover effects on product cards",
+                "Smooth page transitions",
+                "Floating effects for interactive elements",
+                "Gradient animations on backgrounds",
+                "Custom cursor follower with glow effects",
+                "Button ripple effects on click",
+                "Navbar fade-in animation",
+                "Footer reveal animations"
+            ]
+        },
+        "responsive_design": {
+            "description": "Fully mobile-responsive design",
+            "note": "All features work seamlessly on desktop, tablet, and mobile devices"
+        }
+    },
+    "help_and_support": {
+        "ai_chatbot": {
+            "description": "AI-powered chat assistant for help and guidance",
+            "location": "Chat button in bottom-right corner of the page",
+            "capabilities": [
+                "Product information and recommendations",
+                "Navigation assistance",
+                "Shopping process guidance",
+                "Feature explanations",
+                "Promo code help",
+                "Password reset guidance",
+                "General store information"
+            ],
+            "appearance": "Bounces in with glow effect, click to open chat window"
+        }
+    }
+}

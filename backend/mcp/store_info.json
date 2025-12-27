@@ -8,13 +8,87 @@
     "kids": "Kids' fashion for all ages"
   },
   "features": {
-    "shopping_cart": "Add products to cart and checkout seamlessly",
+    "shopping_cart": {
+      "description": "Add products to cart and checkout seamlessly",
+      "persistent": true,
+      "note": "Your cart items are saved even after logout and will be restored when you login again"
+    },
+    "wishlist": {
+      "description": "Save your favorite products to wishlist for later",
+      "requires_authentication": true,
+      "how_to_use": "Login to your account, then click the wishlist button on product pages or in the navbar to manage your wishlist",
+      "url": "/wishlist"
+    },
     "user_accounts": "Create account, login, and manage your profile",
-    "secure_payments": "Razorpay integration for secure payments",
+    "forgot_password": {
+      "description": "Reset your password via email",
+      "how_to_use": "Click 'Forgot Password?' on the login page, enter your email, and you'll receive a reset link",
+      "note": "Check your email inbox for the password reset link"
+    },
+    "secure_payments": {
+      "description": "Razorpay integration for secure payments",
+      "payment_methods": [
+        "Credit Cards",
+        "Debit Cards",
+        "UPI",
+        "Net Banking",
+        "Wallets"
+      ],
+      "currency": "INR (Indian Rupees)"
+    },
+    "promo_codes": {
+      "description": "Apply discount codes at checkout for savings",
+      "how_to_use": "Enter promo code in the cart page before checkout",
+      "example_codes": {
+        "CHRISTMAS25": "25% discount on total order"
+      },
+      "note": "Promo codes are case-sensitive"
+    },
+    "orders": {
+      "description": "View and manage all your orders",
+      "url": "/orders",
+      "requires_authentication": true,
+      "features": [
+        "View order history with status tracking",
+        "See payment details and order items",
+        "Download PDF invoices for your orders",
+        "Rate and review your completed orders",
+        "Track order status (Pending, Processing, Shipped, Delivered)"
+      ]
+    },
+    "invoices": {
+      "description": "Automatic invoice generation and delivery",
+      "features": [
+        "Download PDF invoices from My Orders page",
+        "Invoices automatically sent to your registered email after purchase",
+        "Includes order details, items, pricing, and payment information"
+      ]
+    },
+    "ratings_and_reviews": {
+      "description": "Rate your orders and share your experience",
+      "how_to_use": "Go to My Orders, click 'Rate Order' button on any completed order",
+      "rating_scale": "1 to 5 stars",
+      "optional_review": "You can optionally write a detailed review along with your rating"
+    },
+    "dark_mode": {
+      "description": "Toggle between light and dark themes for comfortable viewing",
+      "how_to_use": "Click the 🌙/☀️ button in the top navigation bar",
+      "note": "Your theme preference is saved and persists across sessions"
+    },
     "product_details": "Detailed product pages with descriptions and images",
     "collections": {
       "popular_in_women": "Trending women's fashion items",
       "new_collections": "Latest arrivals across all categories"
+    },
+    "ai_chatbot": {
+      "description": "AI-powered chat assistant for help and navigation",
+      "capabilities": [
+        "Product information and recommendations",
+        "Navigation guidance",
+        "Shopping assistance",
+        "General store information"
+      ],
+      "location": "Chat button in bottom-right corner"
     }
   },
   "policies": {
@@ -30,7 +104,11 @@
       "Order tracking and status",
       "Payment methods",
       "Returns and exchanges",
-      "Account management"
+      "Account management",
+      "Wishlist management",
+      "Promo code assistance",
+      "Invoice downloads",
+      "Password reset help"
     ]
   }
 }
