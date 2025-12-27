@@ -1,6 +1,38 @@
 {
   "common_questions": [
     {
+      "question": "How do I add items to my wishlist?",
+      "answer": "You need to be logged in to use the wishlist feature. After logging in, click the 'Wishlist' button in the top navigation to view and manage your saved products. You can add products to your wishlist from product pages."
+    },
+    {
+      "question": "Where can I view my order history?",
+      "answer": "Click 'My Orders' in the top navigation bar (visible when logged in) to view all your orders. You can see order status, payment details, download invoices, and rate your orders."
+    },
+    {
+      "question": "How do I download my invoice?",
+      "answer": "Go to My Orders (/orders) and click the 'Download Invoice' button next to any order. Your invoice will be downloaded as a PDF. Invoices are also automatically sent to your registered email after purchase."
+    },
+    {
+      "question": "Can I rate my orders?",
+      "answer": "Yes! Go to My Orders and click 'Rate Order' on any completed order. You can give a rating from 1 to 5 stars and optionally write a detailed review."
+    },
+    {
+      "question": "Do you have promo codes?",
+      "answer": "Yes! You can apply promo codes at checkout in the cart page. Enter your promo code in the promo code box and click 'Apply Promo'. For example, try 'CHRISTMAS25' for 25% off. Note: Promo codes are case-sensitive."
+    },
+    {
+      "question": "How do I reset my password if I forgot it?",
+      "answer": "On the login page, click 'Forgot Password?' link. Enter your email address and you'll receive a password reset link. Check your email inbox for the reset link."
+    },
+    {
+      "question": "Does my cart save if I logout?",
+      "answer": "Yes! Your cart is persistent - items remain in your cart even after you logout and will be restored when you login again."
+    },
+    {
+      "question": "How do I enable dark mode?",
+      "answer": "Click the 🌙 (moon) or ☀️ (sun) emoji button in the top navigation bar to toggle between dark and light themes. Your preference is saved automatically."
+    },
+    {
       "question": "What categories of products do you offer?",
       "answer": "We offer fashion for Men, Women, and Kids. Each category includes clothing, accessories, and more. Browse by clicking the category links in the top menu."
     },
@@ -66,7 +98,10 @@
     "browse_women": "Go to /womens to see women's collection",
     "browse_kids": "Go to /kids to see kids' collection",
     "view_cart": "Click the cart icon at top right",
+    "view_wishlist": "Click 'Wishlist' button in navbar (requires login)",
+    "view_orders": "Click 'My Orders' button in navbar to see order history (requires login)",
     "login_signup": "Click 'Login' button in top navigation",
+    "toggle_theme": "Click the 🌙/☀️ button to switch between dark and light mode",
     "see_all_products": "Go to '/' (Shop page) to see everything"
   },
   "chatbot_capabilities": [
@@ -75,7 +110,11 @@
     "Explain shopping process",
     "Answer questions about features",
     "Guide users to specific sections",
-    "Provide general store information"
+    "Provide general store information",
+    "Explain wishlist and orders features",
+    "Help with promo code usage",
+    "Guide password reset process",
+    "Explain dark mode and theme switching"
   ],
   "limitations": [
     "Cannot access real-time inventory database",

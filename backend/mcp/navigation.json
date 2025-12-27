@@ -34,6 +34,31 @@
         "location": "Logout/Login button in top navigation",
         "url": "/login",
         "description": "Create a new account or login to existing account"
+      },
+      {
+        "action": "View Wishlist",
+        "location": "Wishlist button in top navigation (visible when logged in)",
+        "url": "/wishlist",
+        "description": "Access your saved favorite products",
+        "requires_authentication": true
+      },
+      {
+        "action": "My Orders",
+        "location": "My Orders button in top navigation (visible when logged in)",
+        "url": "/orders",
+        "description": "View order history, track status, download invoices, and rate orders",
+        "requires_authentication": true
+      },
+      {
+        "action": "Forgot Password",
+        "location": "Link on login page",
+        "url": "/login",
+        "description": "Click 'Forgot Password?' link to reset your password via email"
+      },
+      {
+        "action": "Toggle Dark Mode",
+        "location": "🌙/☀️ button in top navigation",
+        "description": "Switch between light and dark themes"
       }
     ],
     "homepage_sections": [
@@ -71,8 +96,15 @@
     "returning_customer": [
       "Login to your account",
       "Browse or search for products",
-      "Add items to cart",
+      "Add items to cart or wishlist",
       "Review cart and checkout"
+    ],
+    "authenticated_features": [
+      "Access Wishlist via navbar button to manage saved products",
+      "View My Orders to track order status and history",
+      "Download invoices from My Orders page",
+      "Rate and review completed orders",
+      "Cart items persist across sessions"
     ]
   },
   "helpful_navigation_tips": {
