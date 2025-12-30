@@ -5,6 +5,7 @@ import { backend_url } from "../config";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   const fetchOrders = async () => {
     try {
@@ -12,6 +13,7 @@ const Orders = () => {
       const data = await res.json();
       if (data.success) {
         setOrders(data.orders);
+        setLastUpdated(new Date()); // Update timestamp
       }
     } catch (err) {
       console.error("Failed to fetch orders:", err);
@@ -44,7 +46,15 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    fetchOrders(); // Initial fetch
+
+    // Set up polling interval - fetch every 30 seconds
+    const interval = setInterval(() => {
+      fetchOrders(); // Fetch every 30 seconds
+    }, 30000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
@@ -57,7 +67,22 @@ const Orders = () => {
 
   return (
     <div className="admin-orders-container">
-      <h2>Manage Orders</h2>
+      <div className="orders-header">
+        <h2>Manage Orders</h2>
+        <div className="refresh-controls">
+          <button
+            className="refresh-btn"
+            onClick={fetchOrders}
+          >
+            🔄 Refresh
+          </button>
+          {lastUpdated && (
+            <span className="last-updated">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </span>
+          )}
+        </div>
+      </div>
 
       <div className="orders-table">
         {orders.map((order) => (

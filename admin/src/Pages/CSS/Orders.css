@@ -4,11 +4,49 @@
   margin: 0 auto;
 }
 
-.admin-orders-container h2 {
-  text-align: center;
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.orders-header h2 {
+  margin: 0;
   color: #333;
   font-size: 32px;
+}
+
+.refresh-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.refresh-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.last-updated {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
 }
 
 .orders-table {
