@@ -4,12 +4,55 @@
   min-height: calc(100vh - 100px);
 }
 
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
 .analytics-title {
   font-size: 32px;
   font-weight: 700;
   color: #333;
-  margin-bottom: 30px;
-  text-align: center;
+  margin: 0;
+}
+
+.refresh-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.refresh-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.refresh-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.last-updated {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
 }
 
 .analytics-loading {
@@ -206,15 +249,15 @@
   .analytics-cards {
     grid-template-columns: 1fr;
   }
-  
+
   .charts-row {
     grid-template-columns: 1fr;
   }
-  
+
   .analytics-title {
     font-size: 24px;
   }
-  
+
   .card-value {
     font-size: 24px;
   }

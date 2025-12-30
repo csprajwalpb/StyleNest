@@ -19,11 +19,20 @@ const Analytics = () => {
     recentOrders: []
   });
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8', '#82ca9d'];
 
   useEffect(() => {
-    fetchAnalyticsData();
+    fetchAnalyticsData(); // Initial fetch
+
+    // Set up polling interval - fetch every 30 seconds
+    const interval = setInterval(() => {
+      fetchAnalyticsData(); // Fetch every 30 seconds
+    }, 30000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
   const fetchAnalyticsData = async () => {
@@ -44,6 +53,7 @@ const Analytics = () => {
         });
       }
       setLoading(false);
+      setLastUpdated(new Date()); // Update timestamp
     } catch (error) {
       console.error("Error fetching analytics:", error);
       setLoading(false);
@@ -56,7 +66,23 @@ const Analytics = () => {
 
   return (
     <div className="analytics-container">
-      <h1 className="analytics-title">📊 Analytics Dashboard</h1>
+      <div className="analytics-header">
+        <h1 className="analytics-title">📊 Analytics Dashboard</h1>
+        <div className="refresh-controls">
+          <button
+            className="refresh-btn"
+            onClick={fetchAnalyticsData}
+            disabled={loading}
+          >
+            🔄 Refresh Now
+          </button>
+          {lastUpdated && (
+            <span className="last-updated">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </span>
+          )}
+        </div>
+      </div>
 
       {/* Summary Cards */}
       <div className="analytics-cards">
@@ -100,8 +126,8 @@ const Analytics = () => {
               <AreaChart data={analyticsData.revenueByMonth}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -109,12 +135,12 @@ const Analytics = () => {
                 <YAxis />
                 <Tooltip formatter={(value) => `₹${value?.toLocaleString() || 0}`} />
                 <Legend />
-                <Area 
-                  type="monotone" 
-                  dataKey="revenue" 
-                  stroke="#8884d8" 
-                  fillOpacity={1} 
-                  fill="url(#colorRevenue)" 
+                <Area
+                  type="monotone"
+                  dataKey="revenue"
+                  stroke="#8884d8"
+                  fillOpacity={1}
+                  fill="url(#colorRevenue)"
                   name="Revenue"
                 />
               </AreaChart>

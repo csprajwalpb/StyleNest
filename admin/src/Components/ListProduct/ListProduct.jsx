@@ -5,16 +5,28 @@ import { backend_url, currency } from "../../App";
 
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   const fetchInfo = () => {
     fetch(`${backend_url}/allproducts`)
       .then((res) => res.json())
-      .then((data) => setAllProducts(data))
+      .then((data) => {
+        setAllProducts(data);
+        setLastUpdated(new Date()); // Update timestamp
+      });
   }
 
   useEffect(() => {
-    fetchInfo();
-  }, [])
+    fetchInfo(); // Initial fetch
+
+    // Set up polling interval - fetch every 30 seconds
+    const interval = setInterval(() => {
+      fetchInfo(); // Fetch every 30 seconds
+    }, 30000);
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const removeProduct = async (id) => {
     await fetch(`${backend_url}/removeproduct`, {
@@ -31,7 +43,22 @@ const ListProduct = () => {
 
   return (
     <div className="listproduct">
-      <h1>All Products List</h1>
+      <div className="listproduct-header">
+        <h1>All Products List</h1>
+        <div className="refresh-controls">
+          <button
+            className="refresh-btn"
+            onClick={fetchInfo}
+          >
+            🔄 Refresh
+          </button>
+          {lastUpdated && (
+            <span className="last-updated">
+              Last updated: {lastUpdated.toLocaleTimeString()}
+            </span>
+          )}
+        </div>
+      </div>
       <div className="listproduct-format-main">
         <p>Products</p> <p>Title</p> <p>Old Price</p> <p>New Price</p> <p>Category</p> <p>Remove</p>
       </div>
