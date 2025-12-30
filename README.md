@@ -2,7 +2,10 @@
 
 **StyleNest** is a full-stack e-commerce web application for online clothing retail, featuring products for **Men, Women, and Kids**. The platform provides a secure, scalable, and user-friendly shopping experience with real-world e-commerce functionalities.
 
-This project was built using the **MERN stack** and containerized with **Docker** as part of the **CBA Apprenticeship Final Project**.
+This project was built using the **MERN stack** and containerized with **Docker** as part of the **CBA Apprenticeship Final Project**.<br></br>
+**Backend** : https://stylenest-backend-c1m2.onrender.com/<br>
+**Frontend** : https://stylenest2025.netlify.app/<br>
+**NOTE** : Start Backend first, else the images won't be loaded.
 
 ---
 
